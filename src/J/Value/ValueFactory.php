@@ -35,4 +35,13 @@ class ValueFactory {
 	public function createMethod($name) {
 		return new Method($name);
 	}
+
+	/**
+	 * @param array|object $params
+	 *
+	 * @return Params
+	 */
+	public function createParams($params) {
+		return new Params($params);
+	}
 } 

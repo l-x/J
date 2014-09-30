@@ -38,4 +38,12 @@ class ValueFactoryTest extends \PHPUnit_Framework_TestCase {
 	public function createMethodReturnsMethodValue() {
 		$this->assertInstanceOf('J\Value\Method', $this->factory->createMethod('some_method'));
 	}
+
+	/**
+	 * @test
+	 * @testdox createParams returns Params value object instance
+	 */
+	public function createParamsReturnsParamsValue() {
+		$this->assertInstanceOf('J\Value\Params', $this->factory->createParams(array(6, 6, 6)));
+	}
 }
