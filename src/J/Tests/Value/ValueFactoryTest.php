@@ -20,7 +20,7 @@ class ValueFactoryTest extends \PHPUnit_Framework_TestCase {
 	 * @testdox createId returns Id value object instance
 	 */
 	public function createIdReturnsIdValue() {
-		$this->assertInstanceOf(Value\Id::class, $this->factory->createId('id'));
+		$this->assertInstanceOf('J\Value\Id', $this->factory->createId('id'));
 	}
 
 	/**
@@ -28,6 +28,6 @@ class ValueFactoryTest extends \PHPUnit_Framework_TestCase {
 	 * @testdox createJsonrpc returns Jsonrpc value object instance
 	 */
 	public function createJsonrpcReturnsJsonrpcValue() {
-		$this->assertInstanceOf(Value\Jsonrpc::class, $this->factory->createJsonrpc('2.0'));
+		$this->assertInstanceOf('J\Value\Jsonrpc', $this->factory->createJsonrpc('2.0'));
 	}
 }
