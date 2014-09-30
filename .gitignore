@@ -2,3 +2,6 @@ dev/
 .idea/
 
 /vendor/
+
+composer.lock
+build
