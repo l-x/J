@@ -36,7 +36,7 @@ abstract class ValueTestCase extends \PHPUnit_Framework_TestCase {
 	 * @testdox Inherits J\Value\ValueInterface
 	 */
 	public function inheritsValueInterface() {
-		$this->assertInstanceOf(ValueInterface::class, $this->getValuePrototype());
+		$this->assertInstanceOf('J\Value\ValueInterface', $this->getValuePrototype());
 	}
 
 	/**
