@@ -10,10 +10,8 @@ addons:
     repo_token:
       secure: "XejmqWzHwWygA+Tx0WYs4JI1BQgu9DAZdWbgKkPfBiIquZYJsVNQgSyI10QDOCerU0+RliS+lv7ignuVswPXfLYeQIRocUjLEUJzKhB2Gblbp/s/QiHYH4nULFUfH0cq18aECPuIQgUIWB9ZUky5TMtE/xKZ+vAOtpS85+Ksd/s="
 before_script:
-- COMPOSER_ROOT_VERSION=dev-master
 - composer self-update
 - composer install
-- mkdir -p build/logs
 script:
 - phpunit --coverage-clover build/logs/clover.xml
 after_success:

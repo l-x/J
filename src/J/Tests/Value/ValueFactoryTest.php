@@ -30,4 +30,12 @@ class ValueFactoryTest extends \PHPUnit_Framework_TestCase {
 	public function createJsonrpcReturnsJsonrpcValue() {
 		$this->assertInstanceOf('J\Value\Jsonrpc', $this->factory->createJsonrpc('2.0'));
 	}
+
+	/**
+	 * @test
+	 * @testdox createMethod returns Method value object instance
+	 */
+	public function createMethodReturnsMethodValue() {
+		$this->assertInstanceOf('J\Value\Method', $this->factory->createMethod('some_method'));
+	}
 }
