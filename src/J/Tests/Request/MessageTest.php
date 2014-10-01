@@ -74,8 +74,8 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
 	 * @test
 	 * @testdox Getter and setter for Exception works as expected
 	 */
-	public function getSetExceptiond() {
-		$this->messagePropGetterSetterTest('Exception', '\Exception');
+	public function getSetException() {
+		$this->messagePropGetterSetterTest('Exception', '\InvalidArgumentException');
 	}
 
 	/**
