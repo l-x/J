@@ -3,11 +3,12 @@
 namespace J\Tests\Value;
 
 use J\Value;
+use J\Value\ValueFactoryInterface;
 
 class ValueFactoryTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * @var Value\ValueFactory
+	 * @var ValueFactoryInterface
 	 */
 	private $factory;
 

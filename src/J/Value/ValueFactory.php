@@ -7,7 +7,7 @@ namespace J\Value;
  *
  * @package J\Value
  */
-class ValueFactory {
+class ValueFactory implements ValueFactoryInterface {
 
 	/**
 	 * @param mixed $id
