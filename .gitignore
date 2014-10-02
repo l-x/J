@@ -1,7 +1,7 @@
 dev/
 .idea/
-
 /vendor/
-
 composer.lock
 build
+phpunit.xml
+phpdoc.dist

@@ -21,7 +21,7 @@ class BuiltInDecoder implements DecoderInterface {
 	public function decode($json_string) {
 		$data = json_decode($json_string);
 
-		if (!$data || !(is_array($data) || is_object($data))) {
+		if (null === $data) {
 			throw new ParseError();
 		}
 

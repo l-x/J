@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="tests">
+<project default="tests" name="/d͡ʒeɪ/">
 	<property name="src_path" value="src/J" />
 	<property name="test_path" value="${src_path}/Tests"/>
 	<property name="build_path" value="." />
@@ -18,7 +18,7 @@
 	</target>
 
 	<target name="phpunit">
-		<phpunit configuration="phpunit.xml" printSummary="true">
+		<phpunit configuration="phpunit.xml.dist" printSummary="true">
 			<batchtest>
 				<fileset refid="test_files" />
 			</batchtest>
@@ -27,9 +27,7 @@
 
 	<target name="lint">
 		<phplint deprecatedAsError="true">
-			<fileset refid="src_files">
-				<exclude name="${test_path}" />
-			</fileset>
+			<fileset refid="src_files" />
 		</phplint>
 	</target>
 </project>

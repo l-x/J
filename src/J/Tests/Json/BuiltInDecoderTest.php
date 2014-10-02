@@ -3,7 +3,6 @@
 namespace J\Tests\Json;
 
 use J\Json\BuiltInDecoder;
-use J\Json\Exception\ParseError;
 
 /**
  * Class BuiltInDecoderTest
@@ -30,40 +29,12 @@ class BuiltInDecoderTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @return array
-	 */
-	public function validDataProvider() {
-		$data = array(1, 2, 3, 42, 666);
-		return array(
-			array($data),
-			array((object) $data),
-		);
-	}
-
-	/**
-	 * @return array
-	 */
-	public function invalidDataProvider() {
-		return array(
-			array(null),
-		        array(''),
-		        array(0),
-		        array(false),
-		        array(true),
-		        array('string'),
-		        array(4.2),
-		);
-	}
-
-	/**
 	 * @test
-	 * @testdox succeeds for valid data types
-	 * @dataProvider validDataProvider
-	 *
-	 * @param mixed $value
+	 * @testdox succeeds when json_decode returns not null
 	 */
-	public function succeedsForValidDatatypes($value) {
+	public function succeedsForValidJson() {
 		require_once __DIR__.'/../Fixtures/json_decode.php';
+		$value = 'not null';
 		$this->assertEquals(
 			$value,
 			$this->decoder->decode($value)
@@ -72,15 +43,13 @@ class BuiltInDecoderTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @test
-	 * @tesdox fails for invalid data types
-	 * @dataProvider invalidDataProvider
+	 * @testdox fails when json_decode returns null
 	 *
-	 * @param $value
+	 * @expectedException \J\Json\Exception\ParseError
 	 */
-	public function failsForInvalidDatatypes($value) {
+	public function failsForInvalidJson() {
 		require_once __DIR__.'/../Fixtures/json_decode.php';
-		$this->setExpectedException('\J\Json\Exception\ParseError');
-
-		$this->decoder->decode($value);
+		$value = null;
+		$this->decoder->decode(null);
 	}
 }
