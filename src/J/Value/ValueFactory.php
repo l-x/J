@@ -44,4 +44,31 @@ class ValueFactory implements ValueFactoryInterface {
 	public function createParams($params) {
 		return new Params($params);
 	}
-} 
+
+	/**
+	 * @param int $code
+	 *
+	 * @return Code
+	 */
+	public function createCode($code) {
+		return new Code($code);
+	}
+
+	/**
+	 * @param string $message
+	 *
+	 * @return Message
+	 */
+	public function createMessage($message) {
+		return new Message($message);
+	}
+
+	/**
+	 * @param mixed $data
+	 *
+	 * @return Data
+	 */
+	public function createData($data) {
+		return new Data($data);
+	}
+}

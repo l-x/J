@@ -41,4 +41,25 @@ interface ValueFactoryInterface {
 	 * @return Params
 	 */
 	public function createParams($params);
+
+	/**
+	 * @param int $code
+	 *
+	 * @return Code
+	 */
+	public function createCode($code);
+
+	/**
+	 * @param string $message
+	 *
+	 * @return Message
+	 */
+	public function createMessage($message);
+
+	/**
+	 * @param mixed $data
+	 *
+	 * @return Data
+	 */
+	public function createData($data);
 }

@@ -3,15 +3,18 @@
 namespace J\Tests\Value;
 
 use J\Value;
-use J\Value\ValueFactoryInterface;
+use J\Value\ValueFactory;
 
 class ValueFactoryTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * @var ValueFactoryInterface
+	 * @var ValueFactory
 	 */
 	private $factory;
 
+	/**
+	 *
+	 */
 	public function setUp() {
 		$this->factory = new Value\ValueFactory();
 	}
@@ -46,5 +49,29 @@ class ValueFactoryTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function createParamsReturnsParamsValue() {
 		$this->assertInstanceOf('J\Value\Params', $this->factory->createParams(array(6, 6, 6)));
+	}
+
+	/**
+	 * @test
+	 * @testdox createCode returns Code value object instance
+	 */
+	public function createCodeReturnsCodeValue() {
+		$this->assertInstanceOf('J\Value\Code', $this->factory->createCode(4711));
+	}
+
+	/**
+	 * @test
+	 * @testdox createMessage returns Message value object instance
+	 */
+	public function createMessageReturnsMessageValue() {
+		$this->assertInstanceOf('J\Value\Message', $this->factory->createMessage('message'));
+	}
+
+	/**
+	 * @test
+	 * @testdox createData returns Data value object instance
+	 */
+	public function createDataReturnsDataValue() {
+		$this->assertInstanceOf('J\Value\Data', $this->factory->createData('data'));
 	}
 }
