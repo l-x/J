@@ -46,9 +46,9 @@ class ResultTest extends ValueTestCase {
 	}
 
 	/**
-	 *
+	 * @param $value
 	 */
-	public function failsOnInvalidValue() {
+	public function failsOnInvalidValue($value) {
 		// disables test in template class
 	}
 }

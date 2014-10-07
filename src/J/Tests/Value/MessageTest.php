@@ -41,7 +41,7 @@ class MessageTest extends ValueTestCase {
 	 */
 	public function invalidValueDataProvider() {
 		return array(
-			array('4,2'),
+			array(4.2),
 			array(fopen('php://stdin', 'r')),
 			array(true),
 			array(false),
