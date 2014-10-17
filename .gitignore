@@ -4,4 +4,4 @@ dev/
 composer.lock
 build
 phpunit.xml
-phpdoc.dist
+phpdoc.xml
