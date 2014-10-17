@@ -2,6 +2,7 @@
 
 namespace J\Service;
 
+use J\Invoker\Invoker;
 use \Pimple\Container;
 use \Pimple\ServiceProviderInterface;
 
@@ -19,9 +20,8 @@ class InvokerServiceProvider implements ServiceProviderInterface {
 	 * @return mixed
 	 */
 	public function register(Container $dic) {
-		$dic['invoke::class'] = '\J\Invoker\Invoker';
-		$dic['invoke'] = function (Container $dic) {
-			return new $dic['invoke::class']();
+		$dic['invoke'] = function () {
+			return new Invoker();
 		};
 	}
 }

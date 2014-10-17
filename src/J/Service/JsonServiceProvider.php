@@ -2,6 +2,8 @@
 
 namespace J\Service;
 
+use J\Json\NativeDecoder;
+use J\Json\NativeEncoder;
 use \Pimple\Container;
 use \Pimple\ServiceProviderInterface;
 
@@ -18,14 +20,12 @@ class JsonServiceProvider implements ServiceProviderInterface {
 	 * @return mixed
 	 */
 	public function register(Container $dic) {
-		$dic['json_encoder::class'] = 'J\Json\NativeEncoder';
-		$dic['json_encoder'] = function (Container $dic) {
-			return new $dic['json_encoder::class']();
+		$dic['json_encoder'] = function () {
+			return new NativeEncoder();
 		};
 
-		$dic['json_decoder::class'] = 'J\Json\NativeDecoder';
-		$dic['json_decoder'] = function (Container $dic) {
-			return new $dic['json_decoder::class']();
+		$dic['json_decoder'] = function () {
+			return new NativeDecoder();
 		};
 	}
 }

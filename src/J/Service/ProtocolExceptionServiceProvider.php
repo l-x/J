@@ -5,7 +5,12 @@ namespace J\Service;
 use \Pimple\Container;
 use \Pimple\ServiceProviderInterface;
 
-class ProtocolExceptionServiceProvider implements  ServiceProviderInterface {
+/**
+ * Class ProtocolExceptionServiceProvider
+ *
+ * @package J\Service
+ */
+class ProtocolExceptionServiceProvider implements ServiceProviderInterface {
 
 	/**
 	 * @var array

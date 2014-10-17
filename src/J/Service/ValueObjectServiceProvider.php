@@ -2,6 +2,7 @@
 
 namespace J\Service;
 
+use J\Value\ValueFactory;
 use \Pimple\Container;
 use \Pimple\ServiceProviderInterface;
 
@@ -18,9 +19,8 @@ class ValueObjectServiceProvider implements ServiceProviderInterface {
 	 * @return mixed
 	 */
 	public function register(Container $dic) {
-		$dic['value_factory::class'] = 'J\Value\ValueFactory';
-		$dic['value_factory'] = function (Container $dic) {
-			return new $dic['value_factory::class']();
+		$dic['value_factory'] = function () {
+			return new ValueFactory();
 		};
 	}
 }

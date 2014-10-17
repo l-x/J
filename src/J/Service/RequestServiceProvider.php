@@ -2,6 +2,10 @@
 
 namespace J\Service;
 
+use J\Request\Message\Message;
+use J\Request\Message\MessageHydrator;
+use J\Request\Request;
+use J\Request\RequestHydrator;
 use \Pimple\Container;
 use \Pimple\ServiceProviderInterface;
 
@@ -18,27 +22,22 @@ class RequestServiceProvider implements ServiceProviderInterface {
 	 * @return null
 	 */
 	public function register(Container $dic) {
-
-		$dic['request_message_hydrator::class'] = '\J\Request\Message\MessageHydrator';
 		$dic['request_message_hydrator'] = function (Container $dic) {
-			return new $dic['request_message_hydrator::class']($dic['value_factory']);
+			return new MessageHydrator($dic['value_factory']);
 		};
 
-		$dic['request_message::class'] = '\J\Request\Message\Message';
-		$dic['request_message'] = $dic->factory(function (Container $dic) {
-				return new $dic['request_message::class']();
+		$dic['request_message'] = $dic->factory(function () {
+				return new Message();
 			}
 		);
 
-		$dic['request::class'] = '\J\Request\Request';
-		$dic['request'] = $dic->factory(function (Container $dic) {
-				return new $dic['request::class']();
+		$dic['request'] = $dic->factory(function () {
+				return new Request();
 			}
 		);
 
-		$dic['request_hydrator::class'] = '\J\Request\RequestHydrator';
 		$dic['request_hydrator'] = function (Container $dic) {
-			return new $dic['request_hydrator::class'](
+			return new RequestHydrator(
 				$dic['request_message_hydrator'],
 				$dic['request_message']
 			);
