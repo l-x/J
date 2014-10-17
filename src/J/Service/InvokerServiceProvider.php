@@ -2,8 +2,8 @@
 
 namespace J\Service;
 
-use J\Di\Container;
-use J\Di\ServiceProviderInterface;
+use \Pimple\Container;
+use \Pimple\ServiceProviderInterface;
 
 /**
  * Class InvokerServiceProvider

@@ -2,8 +2,8 @@
 
 namespace J;
 
-use J\Di\Container;
-use J\Di\ServiceProviderInterface;
+use \Pimple\Container;
+use \Pimple\ServiceProviderInterface;
 use J\Exception\MethodNotFound;
 use J\Exception\ParseError;
 use J\Request\Message\MessageInterface;
@@ -16,7 +16,7 @@ use J\Service;
  *
  * @package J
  */
-class Server extends Di\Container {
+class Server extends Container {
 
 	public function __construct(array $options = array()) {
 		parent::__construct();
