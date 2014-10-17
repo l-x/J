@@ -26,7 +26,8 @@ class Method implements ValueInterface {
 	 * @throws Exception\InvalidMethod
 	 */
 	private function validate() {
-		if (!is_string($this->value) || !$this->value) {
+		$value = $this->value;
+		if (!is_string($value) || !$value) {
 			throw new Exception\InvalidMethod();
 		}
 	}

@@ -8,5 +8,5 @@ namespace J\Json;
  * @return array
  */
 function json_encode($data) {
-	return func_get_args();
+	return $data;
 }

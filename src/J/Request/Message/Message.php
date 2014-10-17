@@ -90,4 +90,42 @@ class Message implements MessageInterface {
 	public function getException() {
 		return $this->exception;
 	}
+
+	/**
+	 * @return Method
+	 */
+	public function getMethod() {
+		return $this->method;
+	}
+
+	/**
+	 * @return Params
+	 */
+	public function getParams() {
+		return $this->params;
+	}
+
+	/**
+	 * @return Id
+	 */
+	public function getId() {
+		return $this->id;
+	}
+
+	/**
+	 * @return Jsonrpc
+	 */
+	public function getJsonrpc() {
+		return $this->jsonrpc;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isNotification() {
+		return (
+			null == $this->getId() ||
+			null === $this->getId()->getValue()
+		);
+	}
 }

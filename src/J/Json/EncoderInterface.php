@@ -12,7 +12,7 @@ interface EncoderInterface {
 	/**
 	 * @param mixed $data
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	public function encode($data);
+	public function __invoke($data);
 } 

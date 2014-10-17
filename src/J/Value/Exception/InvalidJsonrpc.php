@@ -2,6 +2,8 @@
 
 namespace J\Value\Exception;
 
-class InvalidJsonrpc extends \Exception {
+use J\Exception\ProtocolException;
 
-} 
+class InvalidJsonrpc extends InvalidObjectValue {
+
+}

@@ -22,11 +22,21 @@ interface MessageInterface {
 	public function setId(Id $id);
 
 	/**
+	 * @return Id
+	 */
+	public function getId();
+
+	/**
 	 * @param Jsonrpc $jsonrpc
 	 *
 	 * @return null
 	 */
 	public function setJsonrpc(Jsonrpc $jsonrpc);
+
+	/**
+	 * @return Jsonrpc
+	 */
+	public function getJsonrpc();
 
 	/**
 	 * @param Method $method
@@ -36,11 +46,21 @@ interface MessageInterface {
 	public function setMethod(Method $method);
 
 	/**
+	 * @return Method
+	 */
+	public function getMethod();
+
+	/**
 	 * @param Params $params
 	 *
 	 * @return null
 	 */
 	public function setParams(Params $params);
+
+	/**
+	 * @return Params
+	 */
+	public function getParams();
 
 	/**
 	 * @param \Exception $exception
@@ -53,4 +73,9 @@ interface MessageInterface {
 	 * @return \Exception|null
 	 */
 	public function getException();
+
+	/**
+	 * @return bool
+	 */
+	public function isNotification();
 } 

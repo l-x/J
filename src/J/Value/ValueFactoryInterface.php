@@ -43,6 +43,13 @@ interface ValueFactoryInterface {
 	public function createParams($params);
 
 	/**
+	 * @param $result
+	 *
+	 * @return mixed
+	 */
+	public function createResult($result);
+
+	/**
 	 * @param int $code
 	 *
 	 * @return Code

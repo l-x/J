@@ -1,12 +1,12 @@
 <?php
 
-namespace J\Json\Exception;
+namespace J\Exception;
 
 /**
  * Class ParseError
  *
  * @package J\Json\Exception
  */
-class ParseError extends \Exception {
+class ParseError extends ProtocolException {
 
 } 

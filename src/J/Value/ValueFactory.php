@@ -71,4 +71,14 @@ class ValueFactory implements ValueFactoryInterface {
 	public function createData($data) {
 		return new Data($data);
 	}
+
+
+	/**
+	 * @param $result
+	 *
+	 * @return mixed
+	 */
+	public function createResult($result) {
+		return new Result($result);
+	}
 }

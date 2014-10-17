@@ -2,8 +2,6 @@
 
 namespace J\Json;
 
-use J\Json\Exception\ParseError;
-
 /**
  * Interface DecoderInterface
  *
@@ -12,10 +10,9 @@ use J\Json\Exception\ParseError;
 interface DecoderInterface {
 
 	/**
-	 * @param string $json_string
+	 * @param string $data
 	 *
 	 * @return mixed
-	 * @throws ParseError
 	 */
-	public function decode($json_string);
+	public function __invoke($data);
 } 

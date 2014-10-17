@@ -2,6 +2,8 @@
 
 namespace J\Value\Exception;
 
-class InvalidParams extends \Exception {
+use J\Exception\ProtocolException;
+
+class InvalidParams extends InvalidObjectValue {
 
 } 

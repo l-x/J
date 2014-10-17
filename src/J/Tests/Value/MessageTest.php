@@ -33,6 +33,7 @@ class MessageTest extends ValueTestCase {
 	public function validValueDataProvider() {
 		return array(
 			array('some string'),
+		        array(''),
 		);
 	}
 

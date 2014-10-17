@@ -5,6 +5,11 @@ namespace J\Tests\Value;
 use J\Tests\Assets\ValueTestCase;
 use J\Value;
 
+/**
+ * Class ResultTest
+ *
+ * @package J\Tests\Value
+ */
 class ResultTest extends ValueTestCase {
 
 	/**

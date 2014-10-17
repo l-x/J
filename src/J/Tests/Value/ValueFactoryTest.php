@@ -74,4 +74,12 @@ class ValueFactoryTest extends \PHPUnit_Framework_TestCase {
 	public function createDataReturnsDataValue() {
 		$this->assertInstanceOf('J\Value\Data', $this->factory->createData('data'));
 	}
+
+	/**
+	 * @test
+	 * @testdox createResult returns Result value object instance
+	 */
+	public function createResultReturnsResultValue() {
+		$this->assertInstanceOf('J\Value\Result', $this->factory->createResult('some result'));
+	}
 }

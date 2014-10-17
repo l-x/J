@@ -2,6 +2,8 @@
 
 namespace J\Value\Exception;
 
-class InvalidMethod extends \Exception {
+use J\Exception\ProtocolException;
+
+class InvalidMethod extends InvalidObjectValue {
 
 } 

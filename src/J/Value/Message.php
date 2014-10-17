@@ -26,7 +26,7 @@ class Message implements ValueInterface {
 	 * @throws Exception\InvalidMethod
 	 */
 	private function validate() {
-		if (!is_string($this->value) || !$this->value) {
+		if (!is_string($this->value)) {
 			throw new Exception\InvalidMessage();
 		}
 	}
