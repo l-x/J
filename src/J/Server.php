@@ -16,54 +16,61 @@ use J\Service;
  *
  * @package J
  */
-class Server extends Container {
+class Server {
+
+	/**
+	 * @var Container
+	 */
+	private $controllers;
+
+	/**
+	 * @var Container
+	 */
+	private $services;
 
 	public function __construct(array $options = array()) {
-		parent::__construct();
-		$this->setup();
-		$this->setOptions($options);
-	}
-
-	private function setOptions(array $options) {
-		foreach ($options as $key => $value) {
-			$this[$key] = $value;
-		}
+		$this->setup($options);
 	}
 
 	/**
 	 * return null
 	 */
-	private function setup() {
-		$this['controllers'] = new Container();
+	private function setup(array $options) {
+		$this->services = new Container($options);
+		$this->services['exceptions'] = new Container();
+		$this->controllers = new Container();
 
-		$this['exceptions'] = new Container();
 		$this->registerExceptions(new Service\ProtocolExceptionServiceProvider());
 
-		$this->register(new Service\JsonServiceProvider());
-		$this->register(new Service\RequestServiceProvider());
-		$this->register(new Service\ResponseServiceProvider());
-		$this->register(new Service\InvokerServiceProvider());
-		$this->register(new Service\ValueObjectServiceProvider());
+		$this->registerServices(new Service\JsonServiceProvider());
+		$this->registerServices(new Service\RequestServiceProvider());
+		$this->registerServices(new Service\ResponseServiceProvider());
+		$this->registerServices(new Service\InvokerServiceProvider());
+		$this->registerServices(new Service\ValueObjectServiceProvider());
+	}
+
+	public function registerServices(ServiceProviderInterface $services) {
+		$this->services->register($services);
 	}
 
 	public function registerControllers(ServiceProviderInterface $controllers) {
-		$this['controllers']->register($controllers);
+		$this->controllers->register($controllers);
 
 		return $this;
 	}
 
 	public function registerExceptions(ServiceProviderInterface $exceptions) {
-		$this['exceptions']->register($exceptions);
+		$this->services['exceptions']->register($exceptions);
 
 		return $this;
 	}
 
 	private function jsonEncode($data) {
-		return $this['json_encoder']($data);
+		return $this->services['json_encoder']($data);
 	}
 
 	private function jsonDecode($json_string) {
-		$data = $this['json_decoder']($json_string);
+		$data = $this->services['json_decoder']($json_string);
 		if (null === $data) {
 			throw new ParseError();
 		}
@@ -77,8 +84,8 @@ class Server extends Container {
 	 * @return Response\Message\MessageInterface
 	 */
 	private function createResponseMessage(Value\Id $id = null) {
-		$value_factory = $this['value_factory'];
-		$message = $this['response_message'];
+		$value_factory = $this->services['value_factory'];
+		$message = $this->services['response_message'];
 
 		if (null === $id) {
 			$id = $value_factory->createId($id);
@@ -96,8 +103,8 @@ class Server extends Container {
 	 * @return Response\Message\Error\Error
 	 */
 	private function createError(\Exception $exception) {
-		$error = $this['error'];
-		$this['error_hydrator']($error, $exception);
+		$error = $this->services['error'];
+		$this->services['error_hydrator']($error, $exception);
 
 		return $error;
 	}
@@ -112,7 +119,7 @@ class Server extends Container {
 	private function getController(Request\Message\MessageInterface $request_message) {
 		$controller_name = $request_message->getMethod()->getValue();
 		try {
-			$controller = $this['controllers'][$controller_name];
+			$controller = $this->controllers[$controller_name];
 		} catch (\Exception $exception) {
 			throw new MethodNotFound();
 		}
@@ -132,8 +139,8 @@ class Server extends Container {
 		if ($exception = $request_message->getException()) {
 			throw $exception;
 		}
-		$result = $this['invoke']($request_message, $this->getController($request_message));
-		$result_object = $this['value_factory']->createResult($result);
+		$result = $this->services['invoke']($request_message, $this->getController($request_message));
+		$result_object = $this->services['value_factory']->createResult($result);
 		$response_message->setResult($result_object);
 	}
 
@@ -175,10 +182,10 @@ class Server extends Container {
 			$data->exception = $exception;
 		}
 
-		$request = $this['request'];
+		$request = $this->services['request'];
 
 		/** @var callable $hydrate_request */
-		$hydrate_request = $this['request_hydrator'];
+		$hydrate_request = $this->services['request_hydrator'];
 
 		$hydrate_request($request, $data);
 
@@ -187,7 +194,7 @@ class Server extends Container {
 
 	private function serializeResponse(ResponseInterface $response) {
 		return $this->jsonEncode(
-			$this['extract_response']($response)
+			$this->services['extract_response']($response)
 		);
 	}
 
@@ -211,7 +218,7 @@ class Server extends Container {
 	 */
 	public function handle($request, Response\ResponseInterface $response = null) {
 		if (null === $response) {
-			$response = $this['response'];
+			$response = $this->services['response'];
 		}
 
 		$this->handleRequest($this->unserializeRequest($request), $response);
