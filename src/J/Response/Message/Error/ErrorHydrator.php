@@ -2,7 +2,7 @@
 
 namespace J\Response\Message\Error;
 
-use J\Value\ValueFactory;
+use J\Value\ValueFactoryInterface;
 
 /**
  * Class ErrorHydrator
@@ -14,7 +14,7 @@ class ErrorHydrator {
 	const FALLBACK_KEY = 0;
 
 	/**
-	 * @var ValueFactory
+	 * @var ValueFactoryInterface
 	 */
 	private $value_factory;
 
@@ -24,10 +24,10 @@ class ErrorHydrator {
 	private $error_registry;
 
 	/**
-	 * @param ValueFactory $value_factory
+	 * @param ValueFactoryInterface $value_factory
 	 * @param \ArrayAccess $error_registry
 	 */
-	public function __construct(\ArrayAccess $error_registry, ValueFactory $value_factory) {
+	public function __construct(\ArrayAccess $error_registry, ValueFactoryInterface $value_factory) {
 		$this->value_factory = $value_factory;
 		$this->error_registry = $error_registry;
 	}
@@ -43,7 +43,7 @@ class ErrorHydrator {
 			$code = $exception->getCode();
 		}
 
-		return (int) $code;
+		return $code;
 	}
 
 	/**
@@ -61,44 +61,34 @@ class ErrorHydrator {
 	}
 
 	/**
+	 * @param \Exception $exception
+	 *
+	 * @return \Exception
+	 */
+	private function getErrorInfo(\Exception $exception) {
+		$key = get_class($exception);
+
+		if (!isset($this->error_registry[$key])) {
+			$key = static::FALLBACK_KEY;
+		}
+
+		return $this->error_registry[$key];
+	}
+
+	/**
 	 * @param Error $error
 	 * @param \Exception $exception
 	 *
 	 * @return null
 	 */
-	public function hydrate(Error $error, \Exception $exception) {
-		$registry = $this->error_registry;
+	public function __invoke(Error $error, \Exception $exception) {
 		$value_factory = $this->value_factory;
 
-		$exception_class = get_class($exception);
-
-		if (isset($registry[$exception_class])) {
-			$key = $exception_class;
-		} else {
-			$key = static::FALLBACK_KEY;
-		}
-
-		/** @var \Exception $error_info */
-		$error_info = $registry[$key];
-
+		$error_info = $this->getErrorInfo($exception);
 		$code = $this->getCode($exception, $error_info);
 		$message = $this->getMessage($exception, $error_info);
 
 		$error->setCode($value_factory->createCode($code));
 		$error->setMessage($value_factory->createMessage($message));
-	}
-
-	/**
-	 * @param Error $error
-	 *
-	 * @return \stdClass
-	 */
-	public function extract(Error $error) {
-		$data = array(
-			'code'          => $error->getCode()->getValue(),
-		        'message'       => $error->getMessage()->getValue(),
-		);
-
-		return (object) $data;
 	}
 } 

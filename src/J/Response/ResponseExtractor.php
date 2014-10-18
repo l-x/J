@@ -29,14 +29,12 @@ class ResponseExtractor {
 	 * @return \stdClass[]|\stdClass
 	 */
 	public function __invoke(ResponseInterface $response) {
-		$data = array();
-		$exctract_message = $this->message_extractor;
+		$data = array_map(
+			$this->message_extractor,
+			$response->getMessages()
+		);
 
-		foreach ($response->getMessages() as $message) {
-			$data[] = $exctract_message($message);
-		}
-
-		if (!$response->getMultiCall() && 1 <= count($data)) {
+		if (false === $response->getMultiCall() && 1 <= count($data)) {
 			$data = $data[0];
 		}
 

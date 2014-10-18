@@ -97,7 +97,7 @@ class Server extends Container {
 	 */
 	private function createError(\Exception $exception) {
 		$error = $this['error'];
-		$this['error_hydrator']->hydrate($error, $exception);
+		$this['error_hydrator']($error, $exception);
 
 		return $error;
 	}

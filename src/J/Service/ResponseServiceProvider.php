@@ -3,6 +3,7 @@
 namespace J\Service;
 
 use J\Response\Message\Error\Error;
+use J\Response\Message\Error\ErrorExtractor;
 use J\Response\Message\Error\ErrorHydrator;
 use J\Response\Message\Message;
 use J\Response\Message\MessageExtractor;
@@ -35,7 +36,7 @@ class ResponseServiceProvider implements ServiceProviderInterface {
 		);
 
 		$dic['extract_response_message'] = function (Container $dic) {
-			return new MessageExtractor($dic['error_hydrator']);
+			return new MessageExtractor($dic['error_extractor']);
 		};
 
 		$dic['extract_response'] = function (Container $dic) {
@@ -52,6 +53,10 @@ class ResponseServiceProvider implements ServiceProviderInterface {
 				$dic['exceptions'],
 				$dic['value_factory']
 			);
+		};
+
+		$dic['error_extractor'] = function (Container $dic) {
+			return new ErrorExtractor();
 		};
 	}
 }
