@@ -22,10 +22,7 @@ class ResponseExtractorTest extends \PHPUnit_Framework_TestCase {
 	public function setUp() {
 		$this->message = $this->getMock('J\Response\Message\MessageInterface');
 
-		$this->message_extractor = $this->getMockBuilder('J\Response\Message\MessageExtractor')
-			->disableOriginalConstructor()
-			->setMethods(array('__invoke'))
-			->getMock();
+		$this->message_extractor = $this->getMock('J\Response\Message\MessageExtractorInterface');
 		$this->message_extractor->expects($this->any())
 			->method('__invoke')
 			->will($this->returnArgument(0));

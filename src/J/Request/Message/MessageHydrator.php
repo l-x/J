@@ -11,7 +11,7 @@ use J\Value\ValueFactoryInterface;
  *
  * @package J\Request
  */
-class MessageHydrator {
+class MessageHydrator implements MessageHydratorInterface {
 
 	/**
 	 * @var ValueFactoryInterface

@@ -18,7 +18,7 @@ class ErrorHydratorTest extends \PHPUnit_Framework_TestCase {
 
 	public function setUp() {
 		$this->error_registry = new \ArrayObject(array(
-				0                               => new \Exception(), // Fallback exception
+				0                              => new \Exception(), // Fallback exception
 				'InvalidArgumentException'     => new \Exception(), // Registered exception
 		                'RuntimeException'             => new \Exception('default error message'), // Exception with default message
 		                'LogicException'               => new \Exception(null, 1312), // Exception with default code
@@ -27,10 +27,7 @@ class ErrorHydratorTest extends \PHPUnit_Framework_TestCase {
 		$this->value_factory = $this->getMock('J\Value\ValueFactoryInterface');
 		$this->hydrator = new ErrorHydrator($this->error_registry, $this->value_factory);
 
-		$this->error = $this->getMockBuilder('J\Response\Message\Error\Error')
-			->setMethods(array('setCode', 'setMessage'))
-			->disableOriginalConstructor()
-			->getMock();
+		$this->error = $this->getMock('J\Response\Message\Error\ErrorInterface');
 	}
 
 	private function hydratorTest(\Exception $exception, $expected_code, $expected_message) {

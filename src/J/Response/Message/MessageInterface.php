@@ -2,6 +2,7 @@
 namespace J\Response\Message;
 
 use J\Response\Message\Error\Error;
+use J\Response\Message\Error\ErrorInterface;
 use J\Value\Id;
 use J\Value\Jsonrpc;
 use J\Value\Result;
@@ -45,11 +46,11 @@ interface MessageInterface {
 	public function getResult();
 
 	/**
-	 * @param Error $error
+	 * @param ErrorInterface $error
 	 *
 	 * @return null
 	 */
-	public function setError(Error $error);
+	public function setError(ErrorInterface $error);
 
 	/**
 	 * @return Error

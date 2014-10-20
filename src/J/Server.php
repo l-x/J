@@ -41,12 +41,8 @@ class Server {
 		$this->controllers = new Container();
 
 		$this->registerExceptions(new Service\ProtocolExceptionServiceProvider());
+		$this->registerServices(new Service\EssentialServiceProvider());
 
-		$this->registerServices(new Service\JsonServiceProvider());
-		$this->registerServices(new Service\RequestServiceProvider());
-		$this->registerServices(new Service\ResponseServiceProvider());
-		$this->registerServices(new Service\InvokerServiceProvider());
-		$this->registerServices(new Service\ValueObjectServiceProvider());
 	}
 
 	public function registerServices(ServiceProviderInterface $services) {
@@ -211,12 +207,12 @@ class Server {
 	}
 
 	/**
-	 * @param Request\RequestInterface|string $request
-	 * @param Response\ResponseInterface $response
+	 * @param RequestInterface|string $request
+	 * @param ResponseInterface $response
 	 *
 	 * @return string
 	 */
-	public function handle($request, Response\ResponseInterface $response = null) {
+	public function handle($request, ResponseInterface $response = null) {
 		if (null === $response) {
 			$response = $this->services['response'];
 		}

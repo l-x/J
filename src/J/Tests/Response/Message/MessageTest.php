@@ -68,7 +68,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase {
 	 * @testdox setter and getter for error work as expected
 	 */
 	public function error() {
-		$error = $this->getMock('J\Response\Message\Error\Error');
+		$error = $this->getMock('J\Response\Message\Error\ErrorInterface');
 		$this->message->setError($error);
 
 		$this->assertSame($error, $this->message->getError());

@@ -2,7 +2,7 @@
 
 namespace J\Response\Message;
 
-use J\Response\Message\Error\Error;
+use J\Response\Message\Error\ErrorInterface;
 use J\Value\Id;
 use J\Value\Jsonrpc;
 use J\Value\Result;
@@ -62,11 +62,11 @@ class Message implements MessageInterface {
 	}
 
 	/**
-	 * @param Error $error
+	 * @param ErrorInterface $error
 	 *
 	 * @return null
 	 */
-	public function setError(Error $error) {
+	public function setError(ErrorInterface $error) {
 		$this->error = $error;
 	}
 

@@ -48,10 +48,7 @@ class ErrorExtractorTest extends \PHPUnit_Framework_TestCase {
 		$code = $this->createValueObjectMock('J\Value\Code', $data->code);
 		$message = $this->createValueObjectMock('J\Value\Message', $data->message);
 
-		$error = $this->getMockBuilder('J\Response\Message\Error\Error')
-			->disableOriginalConstructor()
-			->setMethods(array('getCode', 'getMessage'))
-			->getMock();
+		$error = $this->getMock('J\Response\Message\Error\ErrorInterface');
 
 		$error->expects($this->any())
 			->method('getCode')

@@ -19,7 +19,7 @@ class ProtocolExceptionServiceProvider implements ServiceProviderInterface {
 		0                                       => array('Internal error', -32603),
 		'J\Exception\ParseError'                => array('Parse error', -32700),
 		'J\Exception\InvalidRequest'            => array('Invalid request', -32600),
-	        'J\Exception\MethodNotFound'            => array('Method not found', -32601),
+		'J\Exception\MethodNotFound'            => array('Method not found', -32601),
 	);
 
 	/**

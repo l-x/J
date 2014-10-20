@@ -24,9 +24,7 @@ class RequestHydratorTest extends \PHPUnit_Framework_TestCase {
 
 	public function setUp() {
 		$this->message = $this->getMock('J\Request\Message\MessageInterface');
-		$this->message_hydrator = $this->getMockBuilder('J\Request\Message\MessageHydrator')
-			->disableOriginalConstructor()
-			->getMock();
+		$this->message_hydrator = $this->getMock('J\Request\Message\MessageHydratorInterface');
 
 
 		$this->hydrator = new RequestHydrator($this->message_hydrator, $this->message);

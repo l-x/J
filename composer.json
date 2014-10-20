@@ -19,6 +19,7 @@
     },
 
     "require-dev": {
-        "codeclimate/php-test-reporter": "dev-master"
+        "codeclimate/php-test-reporter": "dev-master",
+        "keboola/csv": "1.1.*"
     }
 }

@@ -2,25 +2,24 @@
 
 namespace J\Response\Message;
 
-use J\Response\Message\Error\ErrorExtractor;
-use J\Response\Message\Error\ErrorHydrator;
+use J\Response\Message\Error\ErrorExtractorInterface;
 
 /**
  * Class MessageExtractor
  *
  * @package J\Response\Message
  */
-class MessageExtractor {
+class MessageExtractor implements MessageExtractorInterface {
 
 	/**
-	 * @var ErrorHydrator
+	 * @var ErrorExtractorInterface
 	 */
 	private $error_extractor;
 
 	/**
-	 * @param ErrorHydrator $error_hydrator
+	 * @param ErrorExtractorInterface $error_hydrator
 	 */
-	public function __construct(ErrorExtractor $error_extractor) {
+	public function __construct(ErrorExtractorInterface $error_extractor) {
 		$this->error_extractor = $error_extractor;
 	}
 

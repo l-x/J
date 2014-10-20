@@ -2,21 +2,19 @@
 
 namespace J\Response\Message\Error;
 
-use J\Value\ValueFactoryInterface;
-
 /**
  * Class ErrorExtractor
  *
  * @package J\Response\Message\Error
  */
-class ErrorExtractor {
+class ErrorExtractor implements ErrorExtractorInterface {
 
 	/**
-	 * @param Error $error
+	 * @param ErrorInterface $error
 	 *
 	 * @return \stdClass
 	 */
-	public function __invoke(Error $error) {
+	public function __invoke(ErrorInterface $error) {
 		$data = array(
 			'code'          => $error->getCode()->getValue(),
 			'message'       => $error->getMessage()->getValue(),

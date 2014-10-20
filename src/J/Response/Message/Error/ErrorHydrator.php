@@ -9,7 +9,7 @@ use J\Value\ValueFactoryInterface;
  *
  * @package J\Response\Message\Error
  */
-class ErrorHydrator {
+class ErrorHydrator implements ErrorHydratorInterface {
 
 	const FALLBACK_KEY = 0;
 
@@ -76,12 +76,12 @@ class ErrorHydrator {
 	}
 
 	/**
-	 * @param Error $error
+	 * @param ErrorInterface $error
 	 * @param \Exception $exception
 	 *
 	 * @return null
 	 */
-	public function __invoke(Error $error, \Exception $exception) {
+	public function __invoke(ErrorInterface $error, \Exception $exception) {
 		$value_factory = $this->value_factory;
 
 		$error_info = $this->getErrorInfo($exception);

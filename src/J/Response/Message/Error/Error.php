@@ -11,7 +11,7 @@ use J\Value\Message;
  *
  * @package J\Response\Message
  */
-class Error {
+class Error implements ErrorInterface {
 
 	/**
 	 * @var Code

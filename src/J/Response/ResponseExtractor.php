@@ -2,7 +2,7 @@
 
 namespace J\Response;
 
-use J\Response\Message\MessageExtractor;
+use J\Response\Message\MessageExtractorInterface;
 
 /**
  * Class ResponseExtractor
@@ -12,14 +12,14 @@ use J\Response\Message\MessageExtractor;
 class ResponseExtractor {
 
 	/**
-	 * @var MessageExtractor
+	 * @var MessageExtractorInterface
 	 */
 	private $message_extractor;
 
 	/**
-	 * @param MessageExtractor $message_hydrator
+	 * @param MessageExtractorInterface $message_hydrator
 	 */
-	public function __construct(MessageExtractor $message_extractor) {
+	public function __construct(MessageExtractorInterface $message_extractor) {
 		$this->message_extractor = $message_extractor;
 	}
 

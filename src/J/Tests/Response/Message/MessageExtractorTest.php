@@ -13,10 +13,7 @@ use J\Response\Message\MessageExtractor;
 class MessageExtractorTest extends \PHPUnit_Framework_TestCase {
 
 	public function setUp() {
-		$this->error_extractor = $this->getMockBuilder('J\Response\Message\Error\ErrorExtractor')
-			->disableOriginalConstructor()
-			->setMethods(array('__invoke'))
-			->getMock();
+		$this->error_extractor = $this->getMock('J\Response\Message\Error\ErrorExtractorInterface');
 
 		$this->extractor = new MessageExtractor($this->error_extractor);
 		$this->message = $this->getMock('J\Response\Message\MessageInterface');
@@ -82,9 +79,7 @@ class MessageExtractorTest extends \PHPUnit_Framework_TestCase {
 		$data = (object) array(
 			'id'            => 'some_id',
 			'jsonrpc'       => 'jsonrpc_version',
-		        'error'         => $this->getMockBuilder('J\Response\Message\Error\Error')
-			                        ->disableOriginalConstructor()
-			                        ->getMock()
+		        'error'         => $this->getMock('J\Response\Message\Error\ErrorInterface')
 		);
 
 		$id =           $this->createValueObjectMock('J\Value\Id', $data->id);
@@ -100,9 +95,7 @@ class MessageExtractorTest extends \PHPUnit_Framework_TestCase {
 			->willReturn($json_rpc);
 
 
-		$error = $this->getMockBuilder('J\Response\Message\Error\Error')
-			->disableOriginalConstructor()
-			->getMock();
+		$error = $this->getMock('J\Response\Message\Error\ErrorInterface');
 
 		$this->message->expects($this->any())
 			->method('getError')

@@ -15,7 +15,6 @@ before_script:
 script:
 - phpunit --coverage-clover build/logs/clover.xml -c phpunit.xml.dist
 after_success:
-- php vendor/bin/coveralls
 - php vendor/bin/test-reporter --stdout > codeclimate.json
 - 'curl -X POST -d @codeclimate.json -H "Content-Type: application/json" -H "User-Agent: Code Climate (PHP Test Reporter v1.0.1-dev)"  https://codeclimate.com/test_reports'
 

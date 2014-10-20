@@ -3,7 +3,7 @@
 namespace J\Request;
 
 use J\Exception\InvalidRequest;
-use J\Request\Message\MessageHydrator;
+use J\Request\Message\MessageHydratorInterface;
 use J\Request\Message\MessageInterface;
 
 /**
@@ -11,7 +11,7 @@ use J\Request\Message\MessageInterface;
  *
  * @package J\Request
  */
-class RequestHydrator {
+class RequestHydrator implements RequestHydratorInterface {
 
 	/**
 	 * @var callable
@@ -24,9 +24,10 @@ class RequestHydrator {
 	private $message_prototype;
 
 	/**
-	 * @param MessageHydrator $message_hydrator
+	 * @param MessageHydratorInterface $message_hydrator
+	 * @param MessageInterface $message_prototype
 	 */
-	public function __construct(MessageHydrator $message_hydrator, MessageInterface $message_prototype) {
+	public function __construct(MessageHydratorInterface $message_hydrator, MessageInterface $message_prototype) {
 		$this->message_hydrator = $message_hydrator;
 		$this->message_prototype = $message_prototype;
 	}
