@@ -44,7 +44,7 @@ class Invoker implements InvokerInterface {
 			throw new \RuntimeException('Controller must be closure or invokable object');
 		}
 
-		$params = (array) $message->getParams()->getValue();
+		$params = $message->getParams()->getValue();
 
 		return $this->invokeController($controller, $params);
 	}

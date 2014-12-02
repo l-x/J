@@ -10,11 +10,8 @@ addons:
     repo_token:
       secure: "XejmqWzHwWygA+Tx0WYs4JI1BQgu9DAZdWbgKkPfBiIquZYJsVNQgSyI10QDOCerU0+RliS+lv7ignuVswPXfLYeQIRocUjLEUJzKhB2Gblbp/s/QiHYH4nULFUfH0cq18aECPuIQgUIWB9ZUky5TMtE/xKZ+vAOtpS85+Ksd/s="
 before_script:
-- composer self-update
-- composer install
+- make travis-init
 script:
-- phpunit --coverage-clover build/logs/clover.xml -c phpunit.xml.dist
+- make travis-run
 after_success:
-- php vendor/bin/test-reporter --stdout > codeclimate.json
-- 'curl -X POST -d @codeclimate.json -H "Content-Type: application/json" -H "User-Agent: Code Climate (PHP Test Reporter v1.0.1-dev)"  https://codeclimate.com/test_reports'
-
+- make travis-report

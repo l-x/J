@@ -10,12 +10,12 @@ namespace J\Value;
 class Params implements ValueInterface {
 
 	/**
-	 * @var array|object
+	 * @var array
 	 */
 	private $value;
 
 	/**
-	 * @param array|object $name
+	 * @param array $name
 	 */
 	public function __construct($params) {
 		$this->value = $params;

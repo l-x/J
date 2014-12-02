@@ -2,10 +2,10 @@
 <phpdoc>
 	<title>/d͡ʒeɪ/</title>
 	<parser>
-		<target>build/phpdoc</target>
+		<target>_build/phpdoc</target>
 	</parser>
 	<transformer>
-		<target>build/phpdoc</target>
+		<target>_build/phpdoc</target>
 	</transformer>
 	<files>
 		<directory>src/J</directory>
