@@ -19,6 +19,7 @@ use J\Response\ResponseExtractor;
 use J\Value\ValueFactory;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
+use Psr\Log\NullLogger;
 
 /**
  * Class EssentialServiceProvider
@@ -33,7 +34,7 @@ final class EssentialServiceProvider implements ServiceProviderInterface {
 	 * @return null
 	 */
 	private function registerInvokerServices(Container $dic) {
-		$dic['invoke'] = function () {
+		$dic['invoker'] = function () {
 			return new Invoker();
 		};
 
@@ -46,11 +47,11 @@ final class EssentialServiceProvider implements ServiceProviderInterface {
 	 * @return null
 	 */
 	private function registerJsonServices(Container $dic) {
-		$dic['json_encoder'] = function () {
+		$dic['json.encoder'] = function () {
 			return new NativeEncoder();
 		};
 
-		$dic['json_decoder'] = function () {
+		$dic['json.decoder'] = function () {
 			return new NativeDecoder();
 		};
 	}
@@ -61,11 +62,11 @@ final class EssentialServiceProvider implements ServiceProviderInterface {
 	 * @return null
 	 */
 	private function registerRequestServices(Container $dic) {
-		$dic['request_message_hydrator'] = function (Container $dic) {
-			return new MessageHydrator($dic['value_factory']);
+		$dic['request.message.hydrator'] = function (Container $dic) {
+			return new MessageHydrator($dic['value.factory']);
 		};
 
-		$dic['request_message'] = $dic->factory(function () {
+		$dic['request.message'] = $dic->factory(function () {
 				return new RequestMessage();
 			}
 		);
@@ -75,10 +76,10 @@ final class EssentialServiceProvider implements ServiceProviderInterface {
 			}
 		);
 
-		$dic['request_hydrator'] = function (Container $dic) {
+		$dic['request.hydrator'] = function (Container $dic) {
 			return new RequestHydrator(
-				$dic['request_message_hydrator'],
-				$dic['request_message']
+				$dic['request.message.hydrator'],
+				$dic['request.message']
 			);
 		};
 	}
@@ -94,17 +95,17 @@ final class EssentialServiceProvider implements ServiceProviderInterface {
 			}
 		);
 
-		$dic['response_message'] = $dic->factory(function() {
+		$dic['response.message'] = $dic->factory(function() {
 				return new ResponseMessage();
 			}
 		);
 
-		$dic['extract_response_message'] = function (Container $dic) {
-			return new MessageExtractor($dic['error_extractor']);
+		$dic['response.message.extractor'] = function (Container $dic) {
+			return new MessageExtractor($dic['error.extractor']);
 		};
 
-		$dic['extract_response'] = function (Container $dic) {
-			return new ResponseExtractor($dic['extract_response_message']);
+		$dic['response.extractor'] = function (Container $dic) {
+			return new ResponseExtractor($dic['response.message.extractor']);
 		};
 
 		$dic['error'] = $dic->factory(function () {
@@ -112,14 +113,14 @@ final class EssentialServiceProvider implements ServiceProviderInterface {
 			}
 		);
 
-		$dic['error_hydrator'] = function (Container $dic) {
+		$dic['error.hydrator'] = function (Container $dic) {
 			return new ErrorHydrator(
 				$dic['exceptions'],
-				$dic['value_factory']
+				$dic['value.factory']
 			);
 		};
 
-		$dic['error_extractor'] = function (Container $dic) {
+		$dic['error.extractor'] = function (Container $dic) {
 			return new ErrorExtractor();
 		};
 	}
@@ -130,8 +131,19 @@ final class EssentialServiceProvider implements ServiceProviderInterface {
 	 * @return null
 	 */
 	private function registerValueObjectServices(Container $dic) {
-		$dic['value_factory'] = function () {
+		$dic['value.factory'] = function () {
 			return new ValueFactory();
+		};
+	}
+
+	/**
+	 * @param Container $dic
+	 *
+	 * @return null
+	 */
+	private function registerLogger(Container $dic) {
+		$dic['logger'] = function() {
+			return new NullLogger();
 		};
 	}
 
@@ -146,5 +158,6 @@ final class EssentialServiceProvider implements ServiceProviderInterface {
 		$this->registerRequestServices($dic);
 		$this->registerResponseServices($dic);
 		$this->registerValueObjectServices($dic);
+		$this->registerLogger($dic);
 	}
 }

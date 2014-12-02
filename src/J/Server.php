@@ -28,6 +28,9 @@ class Server {
 	 */
 	private $services;
 
+	/**
+	 * @param array $options
+	 */
 	public function __construct(array $options = array()) {
 		$this->setup($options);
 	}
@@ -62,11 +65,11 @@ class Server {
 	}
 
 	private function jsonEncode($data) {
-		return $this->services['json_encoder']($data);
+		return $this->services['json.encoder']($data);
 	}
 
 	private function jsonDecode($json_string) {
-		$data = $this->services['json_decoder']($json_string);
+		$data = $this->services['json.decoder']($json_string);
 		if (null === $data) {
 			throw new ParseError();
 		}
@@ -80,8 +83,8 @@ class Server {
 	 * @return Response\Message\MessageInterface
 	 */
 	private function createResponseMessage(Value\Id $id = null) {
-		$value_factory = $this->services['value_factory'];
-		$message = $this->services['response_message'];
+		$value_factory = $this->services['value.factory'];
+		$message = $this->services['response.message'];
 
 		if (null === $id) {
 			$id = $value_factory->createId($id);
@@ -100,7 +103,7 @@ class Server {
 	 */
 	private function createError(\Exception $exception) {
 		$error = $this->services['error'];
-		$this->services['error_hydrator']($error, $exception);
+		$this->services['error.hydrator']($error, $exception);
 
 		return $error;
 	}
@@ -135,8 +138,8 @@ class Server {
 		if ($exception = $request_message->getException()) {
 			throw $exception;
 		}
-		$result = $this->services['invoke']($request_message, $this->getController($request_message));
-		$result_object = $this->services['value_factory']->createResult($result);
+		$result = $this->services['invoker']($request_message, $this->getController($request_message));
+		$result_object = $this->services['value.factory']->createResult($result);
 		$response_message->setResult($result_object);
 	}
 
@@ -181,7 +184,7 @@ class Server {
 		$request = $this->services['request'];
 
 		/** @var callable $hydrate_request */
-		$hydrate_request = $this->services['request_hydrator'];
+		$hydrate_request = $this->services['request.hydrator'];
 
 		$hydrate_request($request, $data);
 
@@ -190,7 +193,7 @@ class Server {
 
 	private function serializeResponse(ResponseInterface $response) {
 		return $this->jsonEncode(
-			$this->services['extract_response']($response)
+			$this->services['response.extractor']($response)
 		);
 	}
 

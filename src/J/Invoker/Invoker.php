@@ -21,6 +21,16 @@ class Invoker implements InvokerInterface {
 	}
 
 	/**
+	 * @param object $controller
+	 * @param array $params
+	 *
+	 * @return mixed
+	 */
+	protected function invokeController($controller, $params) {
+		return call_user_func_array($controller, $params);
+	}
+
+	/**
 	 * @param MessageInterface $message
 	 * @param $controller
 	 *
@@ -33,6 +43,6 @@ class Invoker implements InvokerInterface {
 
 		$params = (array) $message->getParams()->getValue();
 
-		return call_user_func_array($controller, $params);
+		return $this->invokeController($controller, $params);
 	}
 } 

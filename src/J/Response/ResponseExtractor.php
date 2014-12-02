@@ -9,7 +9,7 @@ use J\Response\Message\MessageExtractorInterface;
  *
  * @package J\Response
  */
-class ResponseExtractor {
+class ResponseExtractor implements ResponseExtractorInterface {
 
 	/**
 	 * @var MessageExtractorInterface
@@ -17,7 +17,7 @@ class ResponseExtractor {
 	private $message_extractor;
 
 	/**
-	 * @param MessageExtractorInterface $message_hydrator
+	 * @param MessageExtractorInterface $message_extractor
 	 */
 	public function __construct(MessageExtractorInterface $message_extractor) {
 		$this->message_extractor = $message_extractor;
@@ -40,6 +40,4 @@ class ResponseExtractor {
 
 		return $data;
 	}
-
-
 } 

@@ -4,11 +4,12 @@ namespace J\Tests\Response;
 
 
 use J\Response\ResponseExtractor;
+use J\Response\ResponseExtractorInterface;
 
 class ResponseExtractorTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * @var ResponseExtractor
+	 * @var ResponseExtractorInterface
 	 */
 	private $extractor;
 

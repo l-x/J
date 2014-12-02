@@ -4,7 +4,6 @@ namespace J\Tests\Services;
 
 use J\Service\EssentialServiceProvider;
 use J\Tests\Assets\ServiceProviderTestCase;
-use J\Tests\Fixtures\MockContainer;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
@@ -32,23 +31,23 @@ class EssentialServiceProviderTest extends ServiceProviderTestCase {
 	}
 
 	public function testInvoker() {
-		$this->simpleServiceTest('invoke', 'J\Invoker\InvokerInterface');
+		$this->simpleServiceTest('invoker', 'J\Invoker\InvokerInterface');
 	}
 
 	public function testJsonEncoder() {
-		$this->simpleServiceTest('json_encoder', 'J\Json\EncoderInterface');
+		$this->simpleServiceTest('json.encoder', 'J\Json\EncoderInterface');
 	}
 
 	public function testJsonDecoder() {
-		$this->simpleServiceTest('json_decoder', 'J\Json\DecoderInterface');
+		$this->simpleServiceTest('json.decoder', 'J\Json\DecoderInterface');
 	}
 
 	public function testValueFactory() {
-		$this->simpleServiceTest('value_factory', 'J\Value\ValueFactoryInterface');
+		$this->simpleServiceTest('value.factory', 'J\Value\ValueFactoryInterface');
 	}
 
 	public function testRequestHydrator() {
-		$this->simpleServiceTest('request_hydrator', 'J\Request\RequestHydrator');
+		$this->simpleServiceTest('request.hydrator', 'J\Request\RequestHydrator');
 	}
 
 	public function testRequest() {
@@ -56,15 +55,15 @@ class EssentialServiceProviderTest extends ServiceProviderTestCase {
 	}
 
 	public function testRequestMessage() {
-		$this->simpleServiceTest('request_message', 'J\Request\Message\MessageInterface');
+		$this->simpleServiceTest('request.message', 'J\Request\Message\MessageInterface');
 	}
 
 	public function testRequestMessageHydrator() {
-		$this->simpleServiceTest('request_message_hydrator', 'J\Request\Message\MessageHydrator');
+		$this->simpleServiceTest('request.message.hydrator', 'J\Request\Message\MessageHydrator');
 	}
 
 	public function testResponseExtractor() {
-		$this->simpleServiceTest('extract_response', 'J\Response\ResponseExtractor');
+		$this->simpleServiceTest('response.extractor', 'J\Response\ResponseExtractor');
 	}
 
 	public function testResponse() {
@@ -72,11 +71,11 @@ class EssentialServiceProviderTest extends ServiceProviderTestCase {
 	}
 
 	public function testResponseMessageExtractor() {
-		$this->simpleServiceTest('extract_response_message', 'J\Response\Message\MessageExtractor');
+		$this->simpleServiceTest('response.message.extractor', 'J\Response\Message\MessageExtractor');
 	}
 
 	public function testResponseMessage() {
-		$this->simpleServiceTest('response_message', 'J\Response\Message\MessageInterface');
+		$this->simpleServiceTest('response.message', 'J\Response\Message\MessageInterface');
 	}
 
 	public function testError() {
@@ -84,6 +83,10 @@ class EssentialServiceProviderTest extends ServiceProviderTestCase {
 	}
 
 	public function testErrorHydrator() {
-		$this->simpleServiceTest('error_hydrator', 'J\Response\Message\Error\ErrorHydrator');
+		$this->simpleServiceTest('error.hydrator', 'J\Response\Message\Error\ErrorHydrator');
+	}
+
+	public function testLogger() {
+		$this->simpleServiceTest('logger', 'Psr\Log\LoggerInterface');
 	}
 }
