@@ -26,7 +26,7 @@ class Params implements ValueInterface {
 	 * @throws Exception\InvalidMethod
 	 */
 	private function validate() {
-		if (!is_null($this->value) && !is_array($this->value) && !is_object($this->value)) {
+		if (!is_null($this->value) && !is_array($this->value)) {
 			throw new Exception\InvalidParams();
 		}
 	}

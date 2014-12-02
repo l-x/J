@@ -3,6 +3,7 @@
 namespace J\Invoker;
 
 use J\Request\Message\MessageInterface;
+use Lx\Fna\Wrapper;
 
 /**
  * Class Invoker
@@ -27,7 +28,9 @@ class Invoker implements InvokerInterface {
 	 * @return mixed
 	 */
 	protected function invokeController($controller, $params) {
-		return call_user_func_array($controller, $params);
+		$callback_wrapper = new Wrapper($controller);
+
+		return $callback_wrapper($params);
 	}
 
 	/**

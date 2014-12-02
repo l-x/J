@@ -33,7 +33,7 @@ class InvokerTest extends \PHPUnit_Framework_TestCase {
 		$this->invoker = new Invoker();
 		$this->message = $this->getMock('J\Request\Message\MessageInterface');
 
-		$this->params_value = array('some', 'params');
+		$this->params_value = array('some' => 'params', 'params' => 'snafu');
 		$params = $this->getMockBuilder('J\Value\Params')
 			->disableOriginalConstructor()
 			->setMethods(array('getValue'))
@@ -58,7 +58,7 @@ class InvokerTest extends \PHPUnit_Framework_TestCase {
 		};
 
 		$result = $this->invoker->__invoke($this->message, $callback);
-		$this->assertEquals($this->params_value, $result);
+		$this->assertEquals(array_values($this->params_value), $result);
 	}
 
 	/**
@@ -68,6 +68,6 @@ class InvokerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function failsForInvalidCallback() {
 		$callback = 'invalid callback';
-		$result = $this->invoker->__invoke($this->message, $callback);
+		$this->invoker->__invoke($this->message, $callback);
 	}
 }
