@@ -28,7 +28,8 @@ class ParamsTest extends ValueTestCase {
 		return array(
 			array(null),
 			array(array(1, 2, 3)),
-		        array(array('param' => 'value', 'another_param' => 'another value'))
+		        array(array('param' => 'value', 'another_param' => 'another value')),
+		        array((object) array(1, 2, 3)),
 		);
 	}
 
@@ -39,7 +40,6 @@ class ParamsTest extends ValueTestCase {
 		return array(
 		        array(true),
 		        array(false),
-		        array((object) array(1, 2, 3)),
 		        array(fopen('php://stdin', 'r')),
 		        array(''),
 		);

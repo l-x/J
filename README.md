@@ -72,5 +72,6 @@ $ curl -X POST http://localhost:8888 -d'[{"jsonrpc":"2.0","id":1,"method":"math.
 ----
 
 [![Build Status](https://travis-ci.org/l-x/J.svg?branch=develop)](https://travis-ci.org/l-x/J)
-[![Code Climate](https://codeclimate.com/github/l-x/J/badges/gpa.svg)](https://codeclimate.com/github/l-x/J)
 [![Test Coverage](https://codeclimate.com/github/l-x/J/badges/coverage.svg)](https://codeclimate.com/github/l-x/J)
+[![Code Climate](https://codeclimate.com/github/l-x/J/badges/gpa.svg)](https://codeclimate.com/github/l-x/J)
+[![Stories in Ready](https://badge.waffle.io/l-x/j.svg?label=ready&title=Ready)](http://waffle.io/l-x/j)

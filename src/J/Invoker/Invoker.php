@@ -2,8 +2,10 @@
 
 namespace J\Invoker;
 
+use Fna\Exception\InvalidParameterException;
+use J\Exception\InvalidRequest;
 use J\Request\Message\MessageInterface;
-use Lx\Fna\Wrapper;
+use Fna\Wrapper;
 
 /**
  * Class Invoker
@@ -27,10 +29,14 @@ class Invoker implements InvokerInterface {
 	 *
 	 * @return mixed
 	 */
-	protected function invokeController($controller, $params) {
+	protected function invokeController($controller, $params = array()) {
 		$callback_wrapper = new Wrapper($controller);
 
-		return $callback_wrapper($params);
+		try {
+			return $callback_wrapper($params);
+		} catch (InvalidParameterException $exception) {
+			throw new InvalidRequest();
+		}
 	}
 
 	/**
@@ -45,6 +51,13 @@ class Invoker implements InvokerInterface {
 		}
 
 		$params = $message->getParams()->getValue();
+		if (is_object($params)) {
+			$params = (array) $params;
+		}
+
+		if (null === $params) {
+			$params = array();
+		}
 
 		return $this->invokeController($controller, $params);
 	}

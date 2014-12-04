@@ -31,9 +31,16 @@ class InvokerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp() {
 		$this->invoker = new Invoker();
-		$this->message = $this->getMock('J\Request\Message\MessageInterface');
+	}
 
-		$this->params_value = array('some' => 'params', 'params' => 'snafu');
+	/**
+	 * @param $params_value
+	 *
+	 * @return \PHPUnit_Framework_MockObject_MockObject
+	 */
+	protected function createMessageMock($params_value = array('some', 'params')) {
+		$message = $this->getMock('J\Request\Message\MessageInterface');
+
 		$params = $this->getMockBuilder('J\Value\Params')
 			->disableOriginalConstructor()
 			->setMethods(array('getValue'))
@@ -41,11 +48,13 @@ class InvokerTest extends \PHPUnit_Framework_TestCase {
 
 		$params->expects($this->any())
 			->method('getValue')
-			->will($this->returnValue($this->params_value));
+			->will($this->returnValue($params_value));
 
-		$this->message->expects($this->any())
+		$message->expects($this->any())
 			->method('getParams')
 			->will($this->returnValue($params));
+
+		return $message;
 	}
 
 	/**
@@ -57,8 +66,8 @@ class InvokerTest extends \PHPUnit_Framework_TestCase {
 			return func_get_args();
 		};
 
-		$result = $this->invoker->__invoke($this->message, $callback);
-		$this->assertEquals(array_values($this->params_value), $result);
+		$result = $this->invoker->__invoke($this->createMessageMock(array('some', 'params')), $callback);
+		$this->assertEquals(array_values(array('some', 'params')), $result);
 	}
 
 	/**
@@ -68,6 +77,43 @@ class InvokerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function failsForInvalidCallback() {
 		$callback = 'invalid callback';
-		$this->invoker->__invoke($this->message, $callback);
+		$this->invoker->__invoke($this->createMessageMock(), $callback);
+	}
+
+	/**
+	 * @test
+	 * @testdox __invoke fails for mixed type parameters
+	 * @expectedException \J\Exception\InvalidRequest
+	 */
+	public function failsForMixedTypeParams() {
+		$callback = function ($some, $params) {
+			return func_get_args();
+		};
+
+		$this->invoker->__invoke($this->createMessageMock(array('some' => 'some', 'params')), $callback);
+	}
+
+	/**
+	 * @test
+	 */
+	public function succeedsForNullParam() {
+		$callback = function ($some = null, $params = null) {
+			return func_get_args();
+		};
+
+		$result = $this->invoker->__invoke($this->createMessageMock(null), $callback);
+		$this->assertEquals(array_values(array()), $result);
+	}
+
+	/**
+	 * @test
+	 */
+	public function succeedsForObjectParam() {
+		$callback = function ($some = null, $params = null) {
+			return func_get_args();
+		};
+
+		$result = $this->invoker->__invoke($this->createMessageMock((object) array('some' => 'params', 'params' => 'moar')), $callback);
+		$this->assertEquals(array_values(array('params', 'moar')), $result);
 	}
 }

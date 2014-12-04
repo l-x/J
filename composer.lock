@@ -4,24 +4,27 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "293a3a790992dddcda14e1b5cd279c9f",
+    "hash": "daa4b1f2bc0febee3e03ba9e9d8bab24",
     "packages": [
         {
             "name": "lx/fna",
-            "version": "0.1",
+            "version": "0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/l-x/Fna.git",
-                "reference": "aa7b54b848eafecbfc450aad93396eb86675748e"
+                "reference": "349d9e05e9f460464935b4e3a4eae7a5968611f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/l-x/Fna/zipball/aa7b54b848eafecbfc450aad93396eb86675748e",
-                "reference": "aa7b54b848eafecbfc450aad93396eb86675748e",
+                "url": "https://api.github.com/repos/l-x/Fna/zipball/349d9e05e9f460464935b4e3a4eae7a5968611f9",
+                "reference": "349d9e05e9f460464935b4e3a4eae7a5968611f9",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.3"
             },
             "type": "library",
             "autoload": {
@@ -36,12 +39,17 @@
             "authors": [
                 {
                     "name": "Alexander Wühr",
-                    "email": "lx@boolshit.de",
-                    "role": "Developer"
+                    "email": "l-x@mailbox.org"
                 }
             ],
             "description": "Fna - Functions with Named Arguments",
-            "time": "2013-12-13 11:33:52"
+            "homepage": "https://l-x.github.io",
+            "keywords": [
+                "callable",
+                "callback",
+                "wrapper"
+            ],
+            "time": "2014-12-03 12:04:14"
         },
         {
             "name": "pimple/pimple",
@@ -365,16 +373,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "2.0.12",
+            "version": "2.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "7ce9da20f96964bb7a4033f53834df13328dbeab"
+                "reference": "0e7d2eec5554f869fa7a4ec2d21e4b37af943ea5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/7ce9da20f96964bb7a4033f53834df13328dbeab",
-                "reference": "7ce9da20f96964bb7a4033f53834df13328dbeab",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/0e7d2eec5554f869fa7a4ec2d21e4b37af943ea5",
+                "reference": "0e7d2eec5554f869fa7a4ec2d21e4b37af943ea5",
                 "shasum": ""
             },
             "require": {
@@ -426,7 +434,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-12-02 13:17:01"
+            "time": "2014-12-03 06:41:44"
         },
         {
             "name": "phpunit/php-file-iterator",

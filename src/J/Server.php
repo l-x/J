@@ -2,6 +2,7 @@
 
 namespace J;
 
+use J\Exception\InvalidRequest;
 use \Pimple\Container;
 use \Pimple\ServiceProviderInterface;
 use J\Exception\MethodNotFound;
@@ -64,12 +65,28 @@ class Server {
 		return $this;
 	}
 
+	/**
+	 * @param mixed $data
+	 *
+	 * @return string
+	 */
 	private function jsonEncode($data) {
 		return $this->services['json.encoder']($data);
 	}
 
+	/**
+	 * @param $json_string
+	 *
+	 * @return mixed
+	 * @throws ParseError
+	 */
 	private function jsonDecode($json_string) {
-		$data = $this->services['json.decoder']($json_string);
+		try {
+			$data = $this->services['json.decoder']($json_string);
+		} catch (\Exception $exception) {
+			throw new ParseError();
+		}
+
 		if (null === $data) {
 			throw new ParseError();
 		}
@@ -191,17 +208,36 @@ class Server {
 		return $request;
 	}
 
+	/**
+	 * @param ResponseInterface $response
+	 *
+	 * @return string
+	 */
 	private function serializeResponse(ResponseInterface $response) {
 		return $this->jsonEncode(
 			$this->services['response.extractor']($response)
 		);
 	}
 
-
+	/**
+	 * @param RequestInterface $request
+	 * @param ResponseInterface $response
+	 *
+	 * @return null
+	 */
 	public function handleRequest(RequestInterface $request, ResponseInterface $response) {
 
 		if ($request->getMultiCall()) {
 			$response->setMultiCall(true);
+		}
+
+		$request_messages = $request->getMessages();
+
+		if (0 == count($request_messages)) {
+			$error = $this->createError(new InvalidRequest());
+			$response_message = $this->createResponseMessage();
+			$response_message->setError($error);
+			$response->addMessage($response_message);
 		}
 
 		foreach ($request->getMessages() as $request_message) {

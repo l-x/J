@@ -15,6 +15,6 @@ class NativeDecoder implements DecoderInterface {
 	 * @return mixed
 	 */
 	public function __invoke($data) {
-		return json_decode($data, true);
+		return json_decode($data, false);
 	}
 }
