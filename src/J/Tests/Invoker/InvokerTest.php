@@ -82,19 +82,6 @@ class InvokerTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @test
-	 * @testdox __invoke fails for mixed type parameters
-	 * @expectedException \J\Exception\InvalidRequest
-	 */
-	public function failsForMixedTypeParams() {
-		$callback = function ($some, $params) {
-			return func_get_args();
-		};
-
-		$this->invoker->__invoke($this->createMessageMock(array('some' => 'some', 'params')), $callback);
-	}
-
-	/**
-	 * @test
 	 */
 	public function succeedsForNullParam() {
 		$callback = function ($some = null, $params = null) {
@@ -103,17 +90,5 @@ class InvokerTest extends \PHPUnit_Framework_TestCase {
 
 		$result = $this->invoker->__invoke($this->createMessageMock(null), $callback);
 		$this->assertEquals(array_values(array()), $result);
-	}
-
-	/**
-	 * @test
-	 */
-	public function succeedsForObjectParam() {
-		$callback = function ($some = null, $params = null) {
-			return func_get_args();
-		};
-
-		$result = $this->invoker->__invoke($this->createMessageMock((object) array('some' => 'params', 'params' => 'moar')), $callback);
-		$this->assertEquals(array_values(array('params', 'moar')), $result);
 	}
 }
