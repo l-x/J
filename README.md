@@ -1,5 +1,7 @@
 # /d͡ʒeɪ/
 
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/l-x/J?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 `AddController.php`
 ```php
 <?php
