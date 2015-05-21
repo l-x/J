@@ -1,0 +1,30 @@
+{
+  "name": "lx/j",
+  "description": "Another highly customizable JSON-RPC2 server",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alexander Wühr",
+      "email": "l-x@mailbox.org"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "J\\": ["src/J"]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "J\\": ["tests/J"]
+    }
+  },
+  "require": {
+    "psr/log": "~1.0",
+    "php": ">=5.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.6",
+    "apigen/apigen": "^4.1",
+    "codeclimate/php-test-reporter": "dev-master"
+  }
+}
