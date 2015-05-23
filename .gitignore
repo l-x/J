@@ -2,6 +2,5 @@
 vendor/
 dev/
 build/
-
-composer.phar
-phpDocumentor.phar
+.couscous/
+*.phar
