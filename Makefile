@@ -1,15 +1,43 @@
-all: tests apidocs phpmd
+init vendor: composer.phar
+	./composer.phar update
 
-apidocs: force
-	vendor/bin/apigen generate -s src -d build/apidocs
+composer.phar:
+	curl https://getcomposer.org/composer.phar > composer.phar
+	chmod +x composer.phar
 
-phpmd: force
-	vendor/bin/phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode > build/phpmd_result.txt
+phpDocumentor.phar:
+	curl http://phpdoc.org/phpDocumentor.phar > phpDocumentor.phar
+	chmod +x phpDocumentor.phar
 
-tests: force
-	vendor/bin/phpunit
+couscous.phar:
+	curl -OS http://couscous.io/couscous.phar
+	chmod +x couscous.phar
 
-clean:
-	rm -r build/*
+tests: vendor
+	./vendor/bin/phpunit \
+		-c phpunit.xml.dist \
+		--coverage-html ./build/coverage \
+		--coverage-clover ./build/logs/clover.xml \
+
+lint: force
+	php -l src/J/
+
+phpdoc: phpDocumentor.phar
+	./phpDocumentor.phar -c phpdoc.dist.xml
+
+gh-pages: couscous.phar
+	./couscous.phar deploy
+
+clean: force
+	rm composer.phar
+	rm phpDocumentor.phar
+	rm -rf build
+	rm -rf vendor
+
+travis-init: vendor
+travis-run: tests
+travis-report: force
+	php vendor/bin/test-reporter --stdout > codeclimate.json
+	curl -X POST -d @codeclimate.json -H "Content-Type: application/json" -H "User-Agent: Code Climate (PHP Test Reporter v1.0.1-dev)"  https://codeclimate.com/test_reports
 
 force:
