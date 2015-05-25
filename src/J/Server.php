@@ -169,8 +169,8 @@ final class Server {
      */
     private function jsonEncode($data)
     {
-        if ([] === $data) {
-            $data = null;
+        if (!$data) {
+            return '';
         }
 
         return json_encode($data);
