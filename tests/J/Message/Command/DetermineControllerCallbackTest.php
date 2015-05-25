@@ -2,7 +2,7 @@
 
 namespace J\Message\Command;
 
-use J\Controller\ControllerFactoryInterface;
+use Interop\Container\ContainerInterface;
 use J\Message\MessageInterface;
 use J\Message\TracerInterface;
 use J\Message\Value\Method;
@@ -25,24 +25,24 @@ class DetermineControllerCallbackTest extends \PHPUnit_Framework_TestCase
      * @param mixed $callback
      * @param bool $is_available
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|ControllerFactoryInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|ContainerInterface
      */
-    private function createControllerFactoryMock($method_name, $callback, $is_available)
+    private function createControllerContainerMock($method_name, $callback, $is_available)
     {
-        $controller_factory = $this->getMock(ControllerFactoryInterface::class);
-        $controller_factory->expects($this->any())
-            ->method('canCreate')
+        $controller_container = $this->getMock(ContainerInterface::class);
+        $controller_container->expects($this->any())
+            ->method('has')
             ->with($method_name)
             ->willReturn($is_available);
 
         if ($is_available) {
-            $controller_factory->expects($this->any())
-                ->method('create')
+            $controller_container->expects($this->any())
+                ->method('get')
                 ->with($method_name)
                 ->willReturn($callback);
         }
 
-        return $controller_factory;
+        return $controller_container;
     }
 
     /**
@@ -74,8 +74,8 @@ class DetermineControllerCallbackTest extends \PHPUnit_Framework_TestCase
     public function actOnOnExistingMethod()
     {
         $callback = function () {};
-        $controller_factory = $this->createControllerFactoryMock('blah', $callback, true);
-        $command = new DetermineControllerCallback($controller_factory);
+        $controller_container = $this->createControllerContainerMock('blah', $callback, true);
+        $command = new DetermineControllerCallback($controller_container);
         $tracer = $this->createTracerMock('blah');
         $tracer->expects($this->atLeastOnce())
             ->method('setCallback')
@@ -92,8 +92,8 @@ class DetermineControllerCallbackTest extends \PHPUnit_Framework_TestCase
      */
     public function actOnOnUnknownMethod()
     {
-        $controller_factory = $this->createControllerFactoryMock('blah', null, false);
-        $command = new DetermineControllerCallback($controller_factory);
+        $controller_container = $this->createControllerContainerMock('blah', null, false);
+        $command = new DetermineControllerCallback($controller_container);
         $tracer = $this->createTracerMock('blah');
         $tracer->expects($this->never())->method('setCallback');
 
@@ -108,8 +108,8 @@ class DetermineControllerCallbackTest extends \PHPUnit_Framework_TestCase
      */
     public function actOnOnPreviousException()
     {
-        $controller_factory = $this->createControllerFactoryMock('blah', null, false);
-        $command = new DetermineControllerCallback($controller_factory);
+        $controller_container = $this->createControllerContainerMock('blah', null, false);
+        $command = new DetermineControllerCallback($controller_container);
         $tracer = $this->createTracerMock('blah');
         $tracer->expects($this->any())
             ->method('getException')

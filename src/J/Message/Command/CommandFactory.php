@@ -2,7 +2,7 @@
 
 namespace J\Message\Command;
 
-use J\Controller\ControllerFactoryInterface;
+use Interop\Container\ContainerInterface;
 use J\Handler\ExceptionHandlerInterface;
 use J\Message\Value\ValueFactoryInterface;
 use J\Handler\ParamsHandlerInterface;
@@ -57,9 +57,9 @@ final class CommandFactory implements CommandFactoryInterface {
     /**
      * {@inheritdoc}
      */
-    public function createDetermineControllerCallback(ControllerFactoryInterface $controller_factory)
+    public function createDetermineControllerCallback(ContainerInterface $controller_container)
     {
-        return new DetermineControllerCallback($controller_factory);
+        return new DetermineControllerCallback($controller_container);
     }
 
     /**

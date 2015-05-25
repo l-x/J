@@ -2,7 +2,7 @@
 
 namespace J;
 
-use J\Controller\ControllerFactoryInterface;
+use Interop\Container\ContainerInterface;
 use J\Exception\InvalidRequest;
 use J\Exception\ParseError;
 use J\Handler\ExceptionHandlerInterface;
@@ -10,11 +10,6 @@ use J\Handler\ParamsHandlerInterface;
 use J\Handler\ResultHandlerInterface;
 use J\Message\Command\CommandFactory;
 use J\Message\Command\CommandFactoryInterface;
-use J\Message\Command\DetermineControllerCallback;
-use J\Message\Command\Extract;
-use J\Message\Command\Hydrate;
-use J\Message\Command\Invoke;
-use J\Message\Command\PrepareRequestData;
 use J\Message\TracerFactory;
 use J\Message\TracerFactoryInterface;
 use J\Message\TracerInterface;
@@ -44,9 +39,9 @@ final class Server {
     private $value_factory;
 
     /**
-     * @var ControllerFactoryInterface
+     * @var ContainerInterface
      */
-    private $controller_factory;
+    private $controller_container;
 
     /**
      * @var ParamsHandlerInterface
@@ -80,11 +75,11 @@ final class Server {
     }
 
     /**
-     * @param ControllerFactoryInterface $controller_factory
+     * @param ContainerInterface $controller_container
      */
-    public function setControllerFactory(ControllerFactoryInterface $controller_factory)
+    public function setControllerContainer(ContainerInterface $controller_container)
     {
-        $this->controller_factory = $controller_factory;
+        $this->controller_container = $controller_container;
     }
 
     /**
@@ -128,7 +123,7 @@ final class Server {
 
         if (!$tracer->getException()) {
             $tracer->execute($this->command_factory->createHydrate($this->value_factory));
-            $tracer->execute($this->command_factory->createDetermineControllerCallback($this->controller_factory));
+            $tracer->execute($this->command_factory->createDetermineControllerCallback($this->controller_container));
             $tracer->execute($this->command_factory->createInvoke($this->params_handler));
         }
 

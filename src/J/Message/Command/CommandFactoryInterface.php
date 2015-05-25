@@ -2,7 +2,7 @@
 
 namespace J\Message\Command;
 
-use J\Controller\ControllerFactoryInterface;
+use Interop\Container\ContainerInterface;
 use J\Handler\ExceptionHandlerInterface;
 use J\Message\Value\ValueFactoryInterface;
 use J\Handler\ParamsHandlerInterface;
@@ -35,11 +35,11 @@ interface CommandFactoryInterface {
     public function createInvoke(ParamsHandlerInterface $param_handler = null);
 
     /**
-     * @param ControllerFactoryInterface $controller_factory
+     * @param ContainerInterface $controller_container
      *
      * @return DetermineControllerCallback
      */
-    public function createDetermineControllerCallback(ControllerFactoryInterface $controller_factory);
+    public function createDetermineControllerCallback(ContainerInterface $controller_container);
 
     /**
      * @param ExceptionHandlerInterface $exception_handler

@@ -2,8 +2,6 @@
 
 namespace J;
 
-use J\Controller\ArrayControllerFactory;
-
 /**
  * Class ServerIntegrationTest
  *
@@ -22,8 +20,8 @@ class ServerIntegrationTest extends \PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->server = Server::create();
-        $controller_factory = new ArrayControllerFactory(include 'Assets/ServerIntegrationTestController.php');
-        $this->server->setControllerFactory($controller_factory);
+        $controller = include 'Assets/ServerIntegrationTestController.php';
+        $this->server->setControllerContainer($controller);
     }
 
     public function requestDataProvider()

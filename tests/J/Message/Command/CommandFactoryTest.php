@@ -2,10 +2,9 @@
 
 namespace J\Message\Command;
 
-use J\Controller\ControllerFactoryInterface;
+use Interop\Container\ContainerInterface;
 use J\Handler\ExceptionHandlerInterface;
 use J\Message\Value\ValueFactoryInterface;
-use J\Handler\ParamsHandlerInterface;
 use J\Handler\ResultHandlerInterface;
 
 /**
@@ -54,7 +53,7 @@ class CommandFactoryTest extends \PHPUnit_Framework_TestCase {
             'createDetermineControllerCallback' => [
                 'createDetermineControllerCallback',
                 DetermineControllerCallback::class,
-                [$this->getMock(ControllerFactoryInterface::class)]
+                [$this->getMock(ContainerInterface::class)]
             ],
             'createExtract' => [
                 'createExtract',

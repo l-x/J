@@ -2,7 +2,7 @@
 
 namespace J\Assets;
 
-return new \ArrayObject([
+return new Container([
     'subtract'     => function ($minuend, $subtrahend)
     {
         return $minuend - $subtrahend;

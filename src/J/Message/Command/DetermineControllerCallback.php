@@ -2,7 +2,7 @@
 
 namespace J\Message\Command;
 
-use J\Controller\ControllerFactoryInterface;
+use Interop\Container\ContainerInterface;
 use J\Exception\MethodNotFound;
 use J\Message\TracerInterface;
 
@@ -14,16 +14,16 @@ use J\Message\TracerInterface;
 final class DetermineControllerCallback implements CommandInterface {
 
     /**
-     * @var ControllerFactoryInterface
+     * @var ContainerInterface
      */
-    private $controller_factory;
+    private $controller_container;
 
     /**
-     * @param ControllerFactoryInterface $controller_factory
+     * @param ContainerInterface $controller_container
      */
-    public function __construct(ControllerFactoryInterface $controller_factory)
+    public function __construct(ContainerInterface $controller_container)
     {
-        $this->controller_factory = $controller_factory;
+        $this->controller_container = $controller_container;
     }
 
     /**
@@ -38,8 +38,8 @@ final class DetermineControllerCallback implements CommandInterface {
         }
         $method_name = $tracer->getMessage()->getMethod()->getValue();
 
-        if ($this->controller_factory->canCreate($method_name)) {
-            $controller = $this->controller_factory->create($method_name);
+        if ($this->controller_container->has($method_name)) {
+            $controller = $this->controller_container->get($method_name);
             $tracer->setCallback($controller);
         } else {
             $tracer->setException(new MethodNotFound());
