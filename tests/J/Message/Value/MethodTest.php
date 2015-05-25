@@ -14,7 +14,7 @@ class MethodTest extends ValueTestCase {
      */
     public function getTestClass()
     {
-        return Method::class;
+        return __NAMESPACE__.'\Method';
     }
 
     /**

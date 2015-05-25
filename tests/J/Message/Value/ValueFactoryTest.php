@@ -27,10 +27,10 @@ class ValueFactoryTest extends \PHPUnit_Framework_TestCase {
      */
     public function factoryMethodProvider() {
         return [
-            'createId'      => ['createId', Id::class, 1337],
-            'createJsonrpc' => ['createJsonrpc', Jsonrpc::class, '2.0'],
-            'createMethod'  => ['createMethod', Method::class, 'some.Method'],
-            'createParams'  => ['createParams', Params::class, ['some', 'params']],
+            'createId'      => ['createId', __NAMESPACE__.'\Id', 1337],
+            'createJsonrpc' => ['createJsonrpc', __NAMESPACE__.'\Jsonrpc', '2.0'],
+            'createMethod'  => ['createMethod', __NAMESPACE__.'\Method', 'some.Method'],
+            'createParams'  => ['createParams', __NAMESPACE__.'\Params', ['some', 'params']],
         ];
     }
 

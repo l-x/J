@@ -3,7 +3,6 @@
 namespace J\Message\Command;
 
 use J\Exception\InvalidParams;
-use J\Message\MessageInterface;
 use J\Message\TracerInterface;
 use J\Message\Value\Params;
 use J\Handler\ParamsHandlerInterface;
@@ -37,8 +36,8 @@ class InvokeTest extends \PHPUnit_Framework_TestCase {
      */
     private function createTracerMock($callback, $params)
     {
-        $message_mock = $this->getMock(MessageInterface::class);
-        $tracer_mock = $this->getMock(TracerInterface::class);
+        $message_mock = $this->getMock('J\Message\MessageInterface');
+        $tracer_mock = $this->getMock('J\Message\TracerInterface');
 
         $tracer_mock->expects($this->any())
             ->method('getMessage')
@@ -63,7 +62,7 @@ class InvokeTest extends \PHPUnit_Framework_TestCase {
      */
     private function createCallbackMock($params, $return_value)
     {
-        $callback = $this->getMockBuilder(\stdClass::class)->setMethods(['__invoke'])->getMock();
+        $callback = $this->getMockBuilder('stdClass')->setMethods(['__invoke'])->getMock();
         $callback->expects($this->once())
             ->method('__invoke')
             ->willReturnArgument(1);
@@ -78,7 +77,7 @@ class InvokeTest extends \PHPUnit_Framework_TestCase {
      */
     private function createParamsHandlerMock($times)
     {
-        $handler = $this->getMock(ParamsHandlerInterface::class);
+        $handler = $this->getMock('J\Handler\ParamsHandlerInterface');
         $handler->expects($this->exactly($times))
             ->method('handle')
             ->willReturnArgument(0);
@@ -123,7 +122,7 @@ class InvokeTest extends \PHPUnit_Framework_TestCase {
             ->with($exception);
 
 
-        $params_handler = $this->getMock(ParamsHandlerInterface::class);
+        $params_handler = $this->getMock('J\Handler\ParamsHandlerInterface');
         $params_handler->expects($this->any())->method('handle')->willThrowException(new \Exception('fuuu'));
 
         $command = new Invoke($params_handler);

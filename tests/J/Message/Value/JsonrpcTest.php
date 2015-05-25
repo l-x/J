@@ -14,7 +14,7 @@ class JsonrpcTest extends ValueTestCase {
      */
     public function getTestClass()
     {
-        return Jsonrpc::class;
+        return __NAMESPACE__.'\Jsonrpc';
     }
 
     /**

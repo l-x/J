@@ -18,7 +18,7 @@ class TracerFactoryTest extends \PHPUnit_Framework_TestCase {
         $factory = new TracerFactory();
         $tracer = $factory->createTracer();
 
-        $this->assertInstanceOf(Tracer::class, $tracer);
-        $this->assertInstanceOf(Message::class, $tracer->getMessage());
+        $this->assertInstanceOf('J\Message\Tracer', $tracer);
+        $this->assertInstanceOf('J\Message\Message', $tracer->getMessage());
     }
 }

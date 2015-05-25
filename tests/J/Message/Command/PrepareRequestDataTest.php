@@ -28,7 +28,7 @@ class PrepareRequestDataTest extends \PHPUnit_Framework_TestCase {
      */
     private function createTracerMock($request_data)
     {
-        $mock = $this->getMock(TracerInterface::class);
+        $mock = $this->getMock('J\Message\TracerInterface');
         $mock->expects($this->any())
             ->method('getRequestData')
             ->willReturn($request_data);
@@ -42,7 +42,6 @@ class PrepareRequestDataTest extends \PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->command = new PrepareRequestData();
-        $this->tracer_mock = $this->getMock(TracerInterface::class);
     }
 
     /**

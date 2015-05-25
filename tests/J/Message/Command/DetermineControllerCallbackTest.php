@@ -29,7 +29,7 @@ class DetermineControllerCallbackTest extends \PHPUnit_Framework_TestCase
      */
     private function createControllerContainerMock($method_name, $callback, $is_available)
     {
-        $controller_container = $this->getMock(ContainerInterface::class);
+        $controller_container = $this->getMock('Interop\Container\ContainerInterface');
         $controller_container->expects($this->any())
             ->method('has')
             ->with($method_name)
@@ -54,12 +54,12 @@ class DetermineControllerCallbackTest extends \PHPUnit_Framework_TestCase
     {
         $method = new Method($method_name);
 
-        $message_mock = $this->getMock(MessageInterface::class);
+        $message_mock = $this->getMock('J\Message\MessageInterface');
         $message_mock->expects($this->any())
             ->method('getMethod')
             ->willReturn($method);
 
-        $tracer = $this->getMock(TracerInterface::class);
+        $tracer = $this->getMock('J\Message\TracerInterface');
         $tracer->expects($this->any())
             ->method('getMessage')
             ->willReturn($message_mock);

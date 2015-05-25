@@ -27,7 +27,7 @@ class TracerTest extends \PHPUnit_Framework_TestCase {
      */
     public function setUp()
     {
-        $this->message_mock = $this->getMock(MessageInterface::class);
+        $this->message_mock = $this->getMock('J\Message\MessageInterface');
         $this->tracer = new Tracer($this->message_mock);
     }
 
@@ -38,7 +38,7 @@ class TracerTest extends \PHPUnit_Framework_TestCase {
     {
         return [
             'Exception'     => ['setException', 'getException', new \Exception()],
-            'Message'       => ['setMessage', 'getMessage', $this->getMock(MessageInterface::class)],
+            'Message'       => ['setMessage', 'getMessage', $this->getMock('J\Message\MessageInterface')],
             'RequestData'   => ['setRequestData', 'getRequestData', (object) []],
             'Result'        => ['setResult', 'getResult', new \stdClass()],
             'Callback'      => ['setCallback', 'getCallback', function () {}],
@@ -70,7 +70,7 @@ class TracerTest extends \PHPUnit_Framework_TestCase {
      */
     public function execute()
     {
-        $command = $this->getMock(CommandInterface::class);
+        $command = $this->getMock('J\Message\Command\CommandInterface');
         $command->expects($this->once())
             ->method('actOn')
             ->with($this->tracer);
@@ -84,8 +84,8 @@ class TracerTest extends \PHPUnit_Framework_TestCase {
      */
     public function constructorSetsInitialValues()
     {
-        $this->assertInstanceOf(\stdClass::class, $this->tracer->getRequestData());
-        $this->assertInstanceOf(MessageInterface::class, $this->tracer->getMessage());
+        $this->assertInstanceOf('stdClass', $this->tracer->getRequestData());
+        $this->assertInstanceOf('J\Message\MessageInterface', $this->tracer->getMessage());
     }
 
     /**

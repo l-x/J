@@ -43,13 +43,13 @@ class HydrateTest extends \PHPUnit_Framework_TestCase {
      */
     public function setUp()
     {
-        $this->message_prototype_mock = $this->getMock(MessageInterface::class);
-        $this->value_factory_mock = $this->getMock(ValueFactoryInterface::class);
+        $this->message_prototype_mock = $this->getMock('J\Message\MessageInterface');
+        $this->value_factory_mock = $this->getMock('J\Message\Value\ValueFactoryInterface');
         $this->hydrate = new Hydrate(
             $this->value_factory_mock,
             $this->message_prototype_mock
         );
-        $this->tracer_mock = $this->getMock(TracerInterface::class);
+        $this->tracer_mock = $this->getMock('J\Message\TracerInterface');
     }
 
     /**

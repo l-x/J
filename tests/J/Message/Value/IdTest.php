@@ -14,7 +14,7 @@ class IdTest extends ValueTestCase {
      */
     public function getTestClass()
     {
-        return Id::class;
+        return __NAMESPACE__.'\Id';
     }
 
     /**

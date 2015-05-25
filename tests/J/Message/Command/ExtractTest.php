@@ -3,12 +3,8 @@
 namespace J\Message\Command;
 
 use J\Exception\MethodNotFound;
-use J\Handler\ExceptionHandlerInterface;
-use J\Message\MessageInterface;
-use J\Message\TracerInterface;
 use J\Message\Value\Id;
 use J\Message\Value\Jsonrpc;
-use J\Handler\ResultHandlerInterface;
 
 /**
  * Class ExtractTest
@@ -35,7 +31,7 @@ class ExtractTest extends \PHPUnit_Framework_TestCase {
      */
     private function createTracerMock($expected_result, $actual_result = null, \Exception $exception = null)
     {
-        $message_mock = $this->getMock(MessageInterface::class);
+        $message_mock = $this->getMock('J\Message\MessageInterface');
         $message_mock->expects($this->any())
             ->method('getId')
             ->willReturn(new Id('id'));
@@ -43,7 +39,7 @@ class ExtractTest extends \PHPUnit_Framework_TestCase {
             ->method('getJsonrpc')
             ->willReturn(new Jsonrpc('2.0'));
 
-        $mock = $this->getMock(TracerInterface::class);
+        $mock = $this->getMock('J\Message\TracerInterface');
         $mock->expects($this->any())
             ->method('getResult')
             ->willReturn($actual_result);
@@ -90,7 +86,7 @@ class ExtractTest extends \PHPUnit_Framework_TestCase {
         ];
 
         $tracer = $this->createTracerMock($expected, 'bar', null);
-        $result_handler = $this->getMock(ResultHandlerInterface::class);
+        $result_handler = $this->getMock('J\Handler\ResultHandlerInterface');
         $result_handler->expects($this->any())
             ->method('handle')
             ->with('bar')
@@ -116,7 +112,7 @@ class ExtractTest extends \PHPUnit_Framework_TestCase {
         ];
 
         $tracer = $this->createTracerMock($expected, 'bar', null);
-        $result_handler = $this->getMock(ResultHandlerInterface::class);
+        $result_handler = $this->getMock('J\Handler\ResultHandlerInterface');
         $result_handler->expects($this->any())
             ->method('handle')
             ->with('bar')
@@ -183,7 +179,7 @@ class ExtractTest extends \PHPUnit_Framework_TestCase {
 
         $exception = new \Exception();
 
-        $exception_handler = $this->getMock(ExceptionHandlerInterface::class);
+        $exception_handler = $this->getMock('J\Handler\ExceptionHandlerInterface');
         $exception_handler->expects($this->once())
             ->method('handle')
             ->with($exception)
@@ -211,7 +207,7 @@ class ExtractTest extends \PHPUnit_Framework_TestCase {
 
         $exception = new \Exception();
 
-        $exception_handler = $this->getMock(ExceptionHandlerInterface::class);
+        $exception_handler = $this->getMock('J\Handler\ExceptionHandlerInterface');
         $exception_handler->expects($this->once())
             ->method('handle')
             ->with($exception)

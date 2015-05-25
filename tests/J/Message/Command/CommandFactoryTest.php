@@ -2,11 +2,6 @@
 
 namespace J\Message\Command;
 
-use Interop\Container\ContainerInterface;
-use J\Handler\ExceptionHandlerInterface;
-use J\Message\Value\ValueFactoryInterface;
-use J\Handler\ResultHandlerInterface;
-
 /**
  * Class CommandFactoryTest
  *
@@ -35,32 +30,32 @@ class CommandFactoryTest extends \PHPUnit_Framework_TestCase {
         return [
             'createHydrate'             => [
                 'createHydrate',
-                Hydrate::class,
-                [$this->getMock(ValueFactoryInterface::class)]
+                'J\Message\Command\Hydrate',
+                [$this->getMock('J\Message\Value\ValueFactoryInterface')]
             ],
 
             'createPrepareRequestData'  => [
                 'createPrepareRequestData',
-                PrepareRequestData::class,
+                'J\Message\Command\PrepareRequestData',
                 []
             ],
 
             'createInvoke' => [
                 'createInvoke',
-                Invoke::class,
+                'J\Message\Command\Invoke',
                 []
             ],
             'createDetermineControllerCallback' => [
                 'createDetermineControllerCallback',
-                DetermineControllerCallback::class,
-                [$this->getMock(ContainerInterface::class)]
+                'J\Message\Command\DetermineControllerCallback',
+                [$this->getMock('Interop\Container\ContainerInterface')]
             ],
             'createExtract' => [
                 'createExtract',
-                Extract::class,
+                'J\Message\Command\Extract',
                 [
-                    $this->getMock(ResultHandlerInterface::class),
-                    $this->getMock(ExceptionHandlerInterface::class),
+                    $this->getMock('J\Handler\ResultHandlerInterface'),
+                    $this->getMock('J\Handler\ExceptionHandlerInterface'),
                 ]
             ],
         ];

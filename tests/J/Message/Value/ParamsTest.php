@@ -14,7 +14,7 @@ class ParamsTest extends ValueTestCase {
      */
     public function getTestClass()
     {
-        return Params::class;
+        return __NAMESPACE__.'\Params';
     }
 
     /**

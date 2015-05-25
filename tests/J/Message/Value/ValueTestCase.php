@@ -66,7 +66,7 @@ abstract class ValueTestCase extends \PHPUnit_Framework_TestCase {
      */
     final public function constructorFailsForInvalidValues($value)
     {
-        $this->setExpectedException(Exception\InvalidRequest::class);
+        $this->setExpectedException('J\Exception\InvalidRequest');
         $value_class = $this->getTestClass();
         new $value_class($value);
     }
