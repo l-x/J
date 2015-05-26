@@ -21,8 +21,10 @@ final class Invoke implements CommandInterface {
 
     /**
      * @param ParamsHandlerInterface $params_handler
+     *
+     * @return void
      */
-    public function __construct(ParamsHandlerInterface $params_handler)
+    public function setParamsHandler(ParamsHandlerInterface $params_handler)
     {
         $this->params_handler = $params_handler;
     }
@@ -104,7 +106,7 @@ final class Invoke implements CommandInterface {
             $parameter_reflection = $this->getCallbackSignature($callback);
 
             $params = $this->makeParamsNamed($parameter_reflection, $params_value);
-            $params = $this->params_handler->handle($params);
+            $params = $this->params_handler ? $this->params_handler->handle($callback, $params) : $params;
             $params = $this->makeParamsNamed($parameter_reflection, $params);
 
             return $params;

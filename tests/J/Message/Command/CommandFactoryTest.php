@@ -43,7 +43,7 @@ class CommandFactoryTest extends \PHPUnit_Framework_TestCase {
             'createInvoke' => [
                 'createInvoke',
                 'J\Message\Command\Invoke',
-                []
+                [$this->getMock('J\Handler\ParamsHandlerInterface')]
             ],
             'createDetermineControllerCallback' => [
                 'createDetermineControllerCallback',

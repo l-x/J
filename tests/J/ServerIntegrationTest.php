@@ -22,6 +22,24 @@ class ServerIntegrationTest extends \PHPUnit_Framework_TestCase {
         $this->server = Server::create();
         $controller = include 'Assets/ServerIntegrationTestController.php';
         $this->server->setControllerContainer($controller);
+
+        $params_handler_mock = $this->getMock('J\Handler\ParamsHandlerInterface');
+        $params_handler_mock->expects($this->any())
+            ->method('handle')
+            ->willReturnArgument(1);
+        $this->server->setParamsHandler($params_handler_mock);
+
+        $exception_handler = $this->getMock('J\Handler\ExceptionHandlerInterface');
+        $exception_handler->expects($this->any())
+            ->method('handle')
+            ->willReturnArgument(0);
+        $this->server->setExceptionHandler($exception_handler);
+
+        $result_handler = $this->getMock('J\Handler\ResultHandlerInterface');
+        $result_handler->expects($this->any())
+            ->method('handle')
+            ->willReturnArgument(0);
+        $this->server->setResultHandler($result_handler);
     }
 
     public function requestDataProvider()

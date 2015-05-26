@@ -10,9 +10,10 @@ namespace J\Handler;
 interface ParamsHandlerInterface {
 
     /**
-     * @param callable     $callback
+     * @param callable $callback
+     * @param array    $params
      *
      * @return array
      */
-    public function handle($params);
+    public function handle(callable $callback, $params);
 }

@@ -14,20 +14,22 @@ class EchoCallback {
     }
 }
 
-class Invokeable  {
-    public function __invoke($a)
-    {
-        return func_get_args();
-    }
-
-}
-
 /**
  * Class InvokeTest
  *
  * @package J\Message\Command
  */
 class InvokeTest extends \PHPUnit_Framework_TestCase {
+
+    private $echo_callback;
+
+    public function setUp()
+    {
+        $this->echo_callback = function ($params)
+        {
+            return $params;
+        };
+    }
 
     /**
      * @param Params|null $params
@@ -60,12 +62,12 @@ class InvokeTest extends \PHPUnit_Framework_TestCase {
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|callable
      */
-    private function createCallbackMock($params, $return_value)
+    private function createCallbackMock()
     {
-        $callback = $this->getMockBuilder('stdClass')->setMethods(['__invoke'])->getMock();
+        $callback = $this->getMockBuilder('\stdClass')->setMethods(['__invoke'])->getMock();
         $callback->expects($this->once())
             ->method('__invoke')
-            ->willReturnArgument(1);
+            ->willReturnArgument(0);
 
         return $callback;
     }
@@ -80,7 +82,7 @@ class InvokeTest extends \PHPUnit_Framework_TestCase {
         $handler = $this->getMock('J\Handler\ParamsHandlerInterface');
         $handler->expects($this->exactly($times))
             ->method('handle')
-            ->willReturnArgument(0);
+            ->willReturnArgument(1);
 
         return $handler;
     }
@@ -91,17 +93,14 @@ class InvokeTest extends \PHPUnit_Framework_TestCase {
      */
     public function actOnForValidData()
     {
-
-        $callback = new EchoCallback();
-
-        $tracer = $this->createTracerMock($callback, new Params(['argument']));
+        $tracer = $this->createTracerMock($this->echo_callback, new Params(['argument']));
         $tracer->expects($this->never())->method('setException');
         $tracer->expects($this->atLeastOnce())->method('setResult');
 
-        $params_handler = $this->createParamsHandlerMock(1);
+        $command = new Invoke();
+        $command->actOn($tracer);
 
-        $command = new Invoke($params_handler);
-
+        $command->setParamsHandler($this->createParamsHandlerMock(1));
         $command->actOn($tracer);
     }
 
@@ -113,19 +112,18 @@ class InvokeTest extends \PHPUnit_Framework_TestCase {
     {
         $exception = new InvalidParams();
 
-        $callback = new EchoCallback();
-
-        $tracer = $this->createTracerMock($callback, new Params(['param']), null);
-        $tracer->expects($this->once())->method('setException')->with($exception);
+        $tracer = $this->createTracerMock($this->echo_callback, new Params(['param']), null);
         $tracer->expects($this->once())
             ->method('setException')
             ->with($exception);
 
-
         $params_handler = $this->getMock('J\Handler\ParamsHandlerInterface');
-        $params_handler->expects($this->any())->method('handle')->willThrowException(new \Exception('fuuu'));
+        $params_handler->expects($this->any())
+            ->method('handle')
+            ->willThrowException(new \Exception('fuuu'));
 
-        $command = new Invoke($params_handler);
+        $command = new Invoke();
+        $command->setParamsHandler($params_handler);
 
         $command->actOn($tracer);
     }
@@ -142,12 +140,9 @@ class InvokeTest extends \PHPUnit_Framework_TestCase {
 
         $tracer = $this->createTracerMock($callback, new Params(['param']));
         $tracer->expects($this->once())->method('setException')->with($exception);
-        $tracer->expects($this->any())->method('getCallback')->willReturn($callback);
 
-        $params_handler = $this->createParamsHandlerMock(1);
-
-        $command = new Invoke($params_handler);
-
+        $command = new Invoke();
+        $command->setParamsHandler($this->createParamsHandlerMock(1));
         $command->actOn($tracer);
     }
 
@@ -161,13 +156,11 @@ class InvokeTest extends \PHPUnit_Framework_TestCase {
 
         $callback = new EchoCallback();
 
-        $tracer = $this->createTracerMock($callback, new Params([]));
+        $tracer = $this->createTracerMock($this->echo_callback, new Params([]));
         $tracer->expects($this->once())->method('setException')->with($exception);
-        $tracer->expects($this->any())->method('getCallback')->willReturn($callback);
 
-        $params_handler = $this->createParamsHandlerMock(0);
-
-        $command = new Invoke($params_handler);
+        $command = new Invoke();
+        $command->setParamsHandler($this->createParamsHandlerMock(0));
 
         $command->actOn($tracer);
     }
@@ -178,14 +171,13 @@ class InvokeTest extends \PHPUnit_Framework_TestCase {
      */
     public function actOnForPreviousException()
     {
-        $callback = new EchoCallback();
-        $tracer = $this->createTracerMock($callback, new Params(['param']), null);
+        $tracer = $this->createTracerMock($this->echo_callback, new Params(['param']), null);
         $tracer->expects($this->any())->method('getException')->willReturn(new \Exception());
         $tracer->expects($this->never())->method('setResult');
-        $params_handler = $this->createParamsHandlerMock(0);
-        $command = new Invoke($params_handler);
+
+        $command = new Invoke();
+        $command->setParamsHandler($this->createParamsHandlerMock(0));
 
         $command->actOn($tracer);
-
     }
 }

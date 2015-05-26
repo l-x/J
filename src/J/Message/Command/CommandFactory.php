@@ -7,8 +7,6 @@ use J\Handler\ExceptionHandlerInterface;
 use J\Message\Value\ValueFactoryInterface;
 use J\Handler\ParamsHandlerInterface;
 use J\Handler\ResultHandlerInterface;
-use J\Handler\ShortCircuitParamsHandler;
-use J\Handler\ShortCircuitResultHandler;
 
 /**
  * Class CommandFactory
@@ -35,23 +33,15 @@ final class CommandFactory implements CommandFactoryInterface {
     /**
      * {@inheritdoc}
      */
-    public function createInvoke(
-        ParamsHandlerInterface $param_handler = null,
-        ResultHandlerInterface $result_handler = null
-    ) {
+    public function createInvoke(ParamsHandlerInterface $param_handler = null)
+    {
+        $invoke = new Invoke();
 
-        if (null === $param_handler) {
-            $param_handler = new ShortCircuitParamsHandler();
+        if (null !== $param_handler) {
+            $invoke->setParamsHandler($param_handler);
         }
 
-        if (null === $result_handler) {
-            $result_handler = new ShortCircuitResultHandler();
-        }
-
-        return new Invoke(
-            $param_handler,
-            $result_handler
-        );
+        return $invoke;
     }
 
     /**
