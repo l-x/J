@@ -4,3 +4,4 @@ dev/
 build/
 .couscous/
 *.phar
+humbug*

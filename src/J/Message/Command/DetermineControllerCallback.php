@@ -40,6 +40,9 @@ final class DetermineControllerCallback implements CommandInterface {
 
         if ($this->controller_container->has($method_name)) {
             $controller = $this->controller_container->get($method_name);
+            if (!is_callable($controller)) {
+                throw new \RuntimeException('Callback container returned something not callable');
+            }
             $tracer->setCallback($controller);
         } else {
             $tracer->setException(new MethodNotFound());

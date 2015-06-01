@@ -148,36 +148,16 @@ class InvokeTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @test
-     * @testdox actOn() behaves well on missing params
+     * @testdox actOn() behaves well on non-callable returned by container
      */
-    public function actOnForMissingParams()
+    public function actOnForNonCallable()
     {
-        $exception = new InvalidParams();
+        $callback = 'non-callable';
 
-        $callback = new EchoCallback();
-
-        $tracer = $this->createTracerMock($this->echo_callback, new Params([]));
-        $tracer->expects($this->once())->method('setException')->with($exception);
+        $tracer = $this->createTracerMock($callback, new Params(['param']));
 
         $command = new Invoke();
         $command->setParamsHandler($this->createParamsHandlerMock(0));
-
-        $command->actOn($tracer);
-    }
-
-    /**
-     * @test
-     * @testdox actOn behaves well when there is allready an exception from previous commands
-     */
-    public function actOnForPreviousException()
-    {
-        $tracer = $this->createTracerMock($this->echo_callback, new Params(['param']), null);
-        $tracer->expects($this->any())->method('getException')->willReturn(new \Exception());
-        $tracer->expects($this->never())->method('setResult');
-
-        $command = new Invoke();
-        $command->setParamsHandler($this->createParamsHandlerMock(0));
-
         $command->actOn($tracer);
     }
 }

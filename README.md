@@ -3,7 +3,7 @@
 
 ----
 
-[![Gitter](https://badges.gitter.im/join.svg)](https://gitter.im/l-x/J)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/l-x/J)
 
 [![License](https://poser.pugx.org/lx/j/license.svg)](https://packagist.org/packages/lx/j)
 [![Build Status](https://travis-ci.org/l-x/J.svg?branch=develop)](https://travis-ci.org/l-x/J)

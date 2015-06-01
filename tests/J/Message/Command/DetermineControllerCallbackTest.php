@@ -104,6 +104,20 @@ class DetermineControllerCallbackTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @testdox actOn() behaves well on unknown method
+     */
+    public function actOnOnNonCallable()
+    {
+        $this->setExpectedException('\RuntimeException');
+        $controller_container = $this->createControllerContainerMock('blah', 'non-callable', true);
+        $command = new DetermineControllerCallback($controller_container);
+        $tracer = $this->createTracerMock('blah');
+
+        $command->actOn($tracer);
+    }
+
+    /**
+     * @test
      * @testdox actOn() behaves well when there is an exception from a previous command
      */
     public function actOnOnPreviousException()

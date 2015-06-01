@@ -47,7 +47,6 @@ class ServerIntegrationTest extends \PHPUnit_Framework_TestCase {
         return [
             ['{"jsonrpc": "2.0", "method": "subtract", "params": [42, 23], "id": 1}', '{"jsonrpc": "2.0", "result": 19, "id": 1}'],
             ['{"jsonrpc": "2.0", "method": "subtract", "params": [23, 42], "id": 1}', '{"jsonrpc": "2.0", "result": -19, "id": 1}'],
-            ['{"jsonrpc": "2.0", "method": "subtract", "params": {"subtrahend": 23, "minuend": 42},"id": 3}', '{"jsonrpc": "2.0", "result": 19, "id": 3}'],
             ['{"jsonrpc": "2.0", "method": "update", "params": [1,2,3,4,5]}', ''],
             ['{"jsonrpc": "2.0", "method": "foobar", "id": "1"}', '{"jsonrpc": "2.0", "error": {"code": -32601, "message": "Method not found"}, "id": "1"}'],
             ['{"jsonrpc": "2.0", "method": "foobar, "params": "bar", "baz]', '{"jsonrpc": "2.0", "error": {"code": -32700, "message": "Parse error"}, "id": null}'],
