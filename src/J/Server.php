@@ -21,7 +21,8 @@ use J\Message\Value\ValueFactoryInterface;
  *
  * @package J
  */
-final class Server {
+final class Server implements ServerInterface
+{
 
     /**
      * @var TracerFactoryInterface
@@ -80,7 +81,7 @@ final class Server {
     }
 
     /**
-     * @param ContainerInterface $controller_container
+     * {@inheritdoc}
      */
     public function setControllerContainer(ContainerInterface $controller_container, $key_prefix = '')
     {
@@ -89,7 +90,7 @@ final class Server {
     }
 
     /**
-     * @param ExceptionHandlerInterface $exception_handler
+     * {@inheritdoc}
      */
     public function setExceptionHandler(ExceptionHandlerInterface $exception_handler)
     {
@@ -97,9 +98,7 @@ final class Server {
     }
 
     /**
-     * @param ParamsHandlerInterface $params_handler
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function setParamsHandler(ParamsHandlerInterface $params_handler)
     {
@@ -107,9 +106,7 @@ final class Server {
     }
 
     /**
-     * @param ResultHandlerInterface $result_handler
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function setResultHandler(ResultHandlerInterface $result_handler)
     {
@@ -147,7 +144,10 @@ final class Server {
     /**
      * @param string $json_string
      *
-     * @return array|object
+     * @return array|\stdClass
+     *
+     * @throws InvalidRequest
+     * @throws ParseError
      */
     private function jsonDecode($json_string)
     {
@@ -184,9 +184,7 @@ final class Server {
 
 
     /**
-     * @param string $json_request
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function handle($json_request)
     {
@@ -227,7 +225,7 @@ final class Server {
     }
 
     /**
-     * @return Server
+     * {@inheritdoc}
      */
     public static function create()
     {
