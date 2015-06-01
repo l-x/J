@@ -47,9 +47,14 @@ final class CommandFactory implements CommandFactoryInterface {
     /**
      * {@inheritdoc}
      */
-    public function createDetermineControllerCallback(ContainerInterface $controller_container)
-    {
-        return new DetermineControllerCallback($controller_container);
+    public function createDetermineControllerCallback(
+        ContainerInterface $controller_container,
+        $key_prefix = ''
+    ) {
+        return new DetermineControllerCallback(
+            $controller_container,
+            $key_prefix
+        );
     }
 
     /**

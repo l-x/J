@@ -30,16 +30,20 @@ interface CommandFactoryInterface {
     /**
      * @param ParamsHandlerInterface $param_handler
      *
-     * @return mixed
+     * @return Invoke
      */
     public function createInvoke(ParamsHandlerInterface $param_handler = null);
 
     /**
      * @param ContainerInterface $controller_container
+     * @param string $key_prefix
      *
      * @return DetermineControllerCallback
      */
-    public function createDetermineControllerCallback(ContainerInterface $controller_container);
+    public function createDetermineControllerCallback(
+        ContainerInterface $controller_container,
+        $key_prefix = ''
+    );
 
     /**
      * @param ExceptionHandlerInterface $exception_handler

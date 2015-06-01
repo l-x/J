@@ -44,6 +44,11 @@ final class Server {
     private $controller_container;
 
     /**
+     * @var string
+     */
+    private $controller_key_prefix;
+
+    /**
      * @var ParamsHandlerInterface
      */
     private $params_handler;
@@ -77,9 +82,10 @@ final class Server {
     /**
      * @param ContainerInterface $controller_container
      */
-    public function setControllerContainer(ContainerInterface $controller_container)
+    public function setControllerContainer(ContainerInterface $controller_container, $key_prefix = '')
     {
         $this->controller_container = $controller_container;
+        $this->controller_key_prefix = $key_prefix;
     }
 
     /**
@@ -123,7 +129,7 @@ final class Server {
 
         if (!$tracer->getException()) {
             $tracer->execute($this->command_factory->createHydrate($this->value_factory));
-            $tracer->execute($this->command_factory->createDetermineControllerCallback($this->controller_container));
+            $tracer->execute($this->command_factory->createDetermineControllerCallback($this->controller_container, $this->controller_key_prefix));
             $tracer->execute($this->command_factory->createInvoke($this->params_handler));
         }
 
