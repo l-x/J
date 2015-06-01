@@ -145,19 +145,4 @@ class InvokeTest extends \PHPUnit_Framework_TestCase {
         $command->setParamsHandler($this->createParamsHandlerMock(1));
         $command->actOn($tracer);
     }
-
-    /**
-     * @test
-     * @testdox actOn() behaves well on non-callable returned by container
-     */
-    public function actOnForNonCallable()
-    {
-        $callback = 'non-callable';
-
-        $tracer = $this->createTracerMock($callback, new Params(['param']));
-
-        $command = new Invoke();
-        $command->setParamsHandler($this->createParamsHandlerMock(0));
-        $command->actOn($tracer);
-    }
 }
